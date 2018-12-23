@@ -34,6 +34,7 @@ ON UPDATE CASCADE
 
 CREATE TABLE `crowdsporting`.`users` (
 `username` VARCHAR(100) NOT NULL UNIQUE ,
+`password` VARCHAR(12) NOT NULL,
 `fname` VARCHAR(100) NOT NULL,
 `lname` VARCHAR(100) NOT NULL,
 `points` INT NOT NULL DEFAULT 0,
@@ -47,5 +48,5 @@ VALUES ('Get fit', 'Iera odos', 199, 12245, 'Athens', 'gym', 'getfitgym@gmail.co
 INSERT INTO crowdsporting.activity ( name, description, prov_name ,likes)
 VALUES ( 'yoga', 'συνδρομή ενός μήνα, 4 μαθήματα την εβδομάδα', 'Get fit', 0);
 
-INSERT INTO crowdsporting.users (username, fname, lname, points, mail)
-VALUES ('dummy', 'John', 'Doe', 0 , 'j_doe@gmail.com');
+INSERT INTO crowdsporting.users (username,password, fname, lname, points, mail)
+VALUES ('dummy', '1q2w3e', 'John', 'Doe', 0 , 'j_doe@gmail.com');
