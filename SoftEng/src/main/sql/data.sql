@@ -35,11 +35,9 @@ ON UPDATE CASCADE
 CREATE TABLE `crowdsporting`.`users` (
 `username` VARCHAR(100) NOT NULL UNIQUE ,
 `password` VARCHAR(12) NOT NULL,
-`fname` VARCHAR(100) NOT NULL,
-`lname` VARCHAR(100) NOT NULL,
 `points` INT NOT NULL DEFAULT 0,
 `mail` VARCHAR(320) NOT NULL ,
-PRIMARY KEY (`username`)
+PRIMARY KEY (`mail`)
 ) ENGINE = InnoDB;
 
 INSERT INTO crowdsporting.provider (name, street, number,  postal_code, city, category, mail , phone, website)
