@@ -3,7 +3,10 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output-test url="file://$MODULE_DIR$/../../SoftEng/out/test/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../SoftEng/src/test" />
+    <content url="file://$MODULE_DIR$/../../SoftEng/src/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../SoftEng/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../SoftEng/src/test/resources" type="java-test-resource" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="SoftEng_Project_2018.main" />
