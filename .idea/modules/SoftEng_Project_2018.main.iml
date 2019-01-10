@@ -5,7 +5,10 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../SoftEng/src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../SoftEng/src/main/java" isTestSource="false" />
+<<<<<<< HEAD
+=======
       <sourceFolder url="file://$MODULE_DIR$/../../SoftEng/src/main/resources" type="java-resource" />
+>>>>>>> origin/master
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
