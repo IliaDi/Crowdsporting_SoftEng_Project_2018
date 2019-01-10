@@ -25,7 +25,7 @@ CREATE TABLE `crowdsporting`.`product`
   `id`          int(11)      NOT NULL AUTO_INCREMENT,
   `name`        varchar(255) NOT NULL,
   `description` mediumtext,
-  `category`    varchar(128) NOT NULL,
+  `category`    ENUM ('Γυμναστήριο', 'χορός', 'πολεμικές τέχνες', 'Paintball', 'Personal Training', 'Rafting', 'Αναρρίχηση','Γιόγκα', 'Ιππασία', 'Καταδύσεις' , 'Κολύμβηση', 'Πιλάτες', 'Ποδόσφαιρο', 'Σκι' ,'Τένις'),
   `withdrawn`   bool         NOT NULL DEFAULT false,
   `likes`       int(11),
   `prov_id`     int(11)      NOT NULL,
@@ -64,5 +64,6 @@ CREATE TABLE `crowdsporting`.`users`
   `points`   INT          NOT NULL DEFAULT 0,
   `mail`     VARCHAR(320) NOT NULL,
   PRIMARY KEY (`mail`)
-) ENGINE = InnoDB;
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
