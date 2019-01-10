@@ -25,7 +25,7 @@ CREATE TABLE `crowdsporting`.`product`
   `id`          int(11)      NOT NULL AUTO_INCREMENT,
   `name`        varchar(255) NOT NULL,
   `description` mediumtext,
-  `category`    ENUM ('Γυμναστήριο', 'χορός', 'πολεμικές τέχνες', 'Paintball', 'Personal Training', 'Rafting', 'Αναρρίχηση','Γιόγκα', 'Ιππασία', 'Καταδύσεις' , 'Κολύμβηση', 'Πιλάτες', 'Ποδόσφαιρο', 'Σκι' ,'Τένις'),
+  `category`    ENUM ('Γυμναστήριο', 'χορός', 'πολεμικές τέχνες', 'Paintball', 'Personal Training', 'Rafting', 'Αναρρίχηση','Γιόγκα', 'Ιππασία', 'Καταδύσεις' , 'Κολύμβηση', 'Πιλάτες', 'Ποδόσφαιρο', 'Σκι' ,'Τένις', 'άλλο'),
   `withdrawn`   bool         NOT NULL DEFAULT false,
   `likes`       int(11),
   `prov_id`     int(11)      NOT NULL,
