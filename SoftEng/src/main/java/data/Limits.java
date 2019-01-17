@@ -6,7 +6,7 @@ public class Limits {
     public static final int TOTAL_NOT_FETCHED = -1;
 
     private final long start;
-    private final int  count;
+    private final int count;
     private long total = TOTAL_NOT_FETCHED;
 
     public Limits(long start) {

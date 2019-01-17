@@ -2,6 +2,7 @@ package data.model;
 
 //import java.util.ArrayList;
 //import java.util.List;
+
 import java.util.Objects;
 
 
@@ -12,11 +13,11 @@ public class User {
     private final long points;
     private final String mail;
 
-    public User(String username, String password, String mail){
-        this.username   = username;
-        this.password   = password;
-        this.points     = 0;
-        this.mail       = mail;
+    public User(String username, String password, String mail) {
+        this.username = username;
+        this.password = password;
+        this.points = 0;
+        this.mail = mail;
     }
 
     public String getUsername() {
