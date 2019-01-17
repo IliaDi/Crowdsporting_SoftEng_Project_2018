@@ -21,19 +21,19 @@ public class Shop {
 
     private List<String> tags = new ArrayList<>();
 
-    public Shop(long id, String name, String street,int number, int postal_code, String city, String mail, String phone, String website, double lng, double lat, boolean withdrawn) {
-        this.id          = id;
-        this.name        = name;
-        this.street      = street;
-        this.number      = number;
+    public Shop(long id, String name, String street, int number, int postal_code, String city, String mail, String phone, String website, double lng, double lat, boolean withdrawn) {
+        this.id = id;
+        this.name = name;
+        this.street = street;
+        this.number = number;
         this.postal_code = postal_code;
-        this.city        = city;
-        this.mail        = mail;
-        this.phone       = phone;
-        this.website     = website;
-        this.lng         = lng;
-        this.lat         = lat;
-        this.withdrawn   = withdrawn;
+        this.city = city;
+        this.mail = mail;
+        this.phone = phone;
+        this.website = website;
+        this.lng = lng;
+        this.lat = lat;
+        this.withdrawn = withdrawn;
 
     }
 
@@ -56,6 +56,7 @@ public class Shop {
 
         return number;
     }
+
     public int getPostal_code() {
 
         return postal_code;
@@ -81,12 +82,12 @@ public class Shop {
         return website;
     }
 
-    public double getLng(){
+    public double getLng() {
 
         return lng;
     }
 
-    public double getLat(){
+    public double getLat() {
 
         return lat;
     }
