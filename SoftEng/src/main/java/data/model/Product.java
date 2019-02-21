@@ -12,15 +12,17 @@ public class Product {
     private final String category;
     private final boolean withdrawn;
     private final long likes;
+    private final long price;
     private List<String> tags = new ArrayList<>();
 
-    public Product(long id, String name, String description, String category, boolean withdrawn, long likes) {
+    public Product(long id, String name, String description, String category, boolean withdrawn, long likes, long price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.category = category;
         this.withdrawn = withdrawn;
         this.likes = likes;
+        this.price = price;
     }
 
     public long getId() {

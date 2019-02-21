@@ -29,6 +29,7 @@ CREATE TABLE `crowdsporting`.`product`
   `withdrawn`   bool         NOT NULL DEFAULT false,
   `likes`       int(11),
   `prov_id`     int(11)      NOT NULL,
+  `price`       int(11) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`prov_id`) REFERENCES `crowdsporting`.`shop` (`id`)
     ON DELETE CASCADE

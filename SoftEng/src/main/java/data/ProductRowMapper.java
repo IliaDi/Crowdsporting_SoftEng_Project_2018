@@ -17,8 +17,9 @@ public class ProductRowMapper implements RowMapper {
         String category = rs.getString("category");
         boolean withdrawn = rs.getBoolean("withdrawn");
         long likes =rs.getLong("likes");
+        long price= rs.getLong("price");
 
-        return new Product(id, name, description, category, withdrawn, likes);
+        return new Product(id, name, description, category, withdrawn, likes, price);
     }
 
 }
