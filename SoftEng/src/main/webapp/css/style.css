@@ -1986,4 +1986,29 @@ div.cs-select span {
   background: url(../images/hourglass.svg) center no-repeat #222222;
 }
 
+#activity_res {
+  overflow: scroll;
+  margin: 10px;
+  padding: 5px;
+  height:500px;
+  border: 2px solid #ccc;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  
+}
+
+.activity_item {
+  padding: 10px 20px;
+  
+  border-bottom: 1px solid #ccc;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  &:nth-child(even) {
+    background: #f8f8f8;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

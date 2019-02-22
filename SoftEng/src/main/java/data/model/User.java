@@ -13,10 +13,10 @@ public class User {
     private final long points;
     private final String mail;
 
-    public User(String username, String password, String mail) {
+    public User(String username, String password, long points , String mail) {
         this.username = username;
         this.password = password;
-        this.points = 0;
+        this.points = points;
         this.mail = mail;
     }
 
