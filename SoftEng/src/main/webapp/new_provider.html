@@ -77,42 +77,44 @@
 									<div class="tab-content">
 										<div class="row">
 										<form>
-								
+								            <h3 class="col-sm-12 col-md-12 col-xs-12"> Νέα καταχώρηση </h3>
 	                                        <div class="col-sm-12 mt">
-											    <h3> Νέα καταχώρηση </h3>
                                                 <label for="name"><b>Όνομα*</b></label>
                                                 <input type="text" placeholder="προσθέστε όνομα.." class="form-control" id="name" required>
 											</div>
-											<div class="col-sm-12 mt">
+											<div class="col-sm-5 mt">
                                                 <label for="street"><b>Οδός*</b></label>
                                                 <input type="text" placeholder="προσθέστε οδό.." class="form-control" id="street" required>
 											</div>
-											<div class="col-sm-12 mt">
+											<div class="col-sm-2 mt">
                                                 <label for="number"><b>Αριθμός*</b></label>
-                                                <input type="number" placeholder="προσθέστε αριθμό.." class="form-control" id="number" required>
+                                                <input type="number" placeholder="..." class="form-control" id="number" required>
 											</div>
-											<div class="col-sm-12 mt">
+											<div class="col-sm-3 mt">
                                                 <label for="postal_code"><b>Τ.Κ.*</b></label>
-                                                <input type="number" placeholder="προσθέστε ταχυδρομικό κώδικα.." class="form-control" id="postal_code" required>
+                                                <input type="number" placeholder="..." class="form-control" id="postal_code" required>
 											</div>
-											<div class="col-sm-12 mt">
+											<div class="col-sm-5 mt">
                                                 <label for="city_prov"><b>Πόλη*</b></label>
                                                 <input type="text" placeholder="προσθέστε πόλη.." class="form-control" id="city_prov" required>
 											</div>
+											<span style="width:100%;">Κάντε κλικ στον χάρτη για να τοποθετηθεί pin στην τοποθεσία</span>
+											<div class="col-sm-12 col-md-10 col-xs-12 col-xxs-12" id="map_prov">
+											</div>
 											
-											<div class="col-sm-12 mt">
+											<div class="col-sm-5 mt">
                                                 <label for="mail"><b>Email</b></label>
                                                 <input type="email" placeholder="προσθέστε e-mail.." class="form-control" id="mail">
 											</div>
-											<div class="col-sm-12 mt">
+											<div class="col-sm-5 mt">
                                                 <label for="phone"><b>Τηλέφωνο*</b></label>
                                                 <input type="number" placeholder="προσθέστε τηλέφωνο.." class="form-control" id="phone" required>
 											</div>
-											<div class="col-sm-12 mt">
+											<div class="col-sm-5 mt">
                                                 <label for="site"><b>Website</b></label>
                                                 <input type="url" placeholder="προσθέστε website.." class="form-control" id="website">
 											</div>   
-											<div class="col-sm-12 mt">
+											<div class="col-sm-5 mt">
                                                 <label for="tags"><b>Tags* (Χωρίστε με κόμματα)</b></label>
                                                 <input type="text" placeholder="προσθέστε λέξεις κλειδιά.." class="form-control" id="tags" required>
 											</div>
@@ -199,6 +201,9 @@
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&sensor=false"></script>
+	<script src="js/google_map_prov.js"></script>
 
 	</body>
 </html>  

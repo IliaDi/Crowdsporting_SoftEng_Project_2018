@@ -1607,6 +1607,11 @@ div.cs-select span {
   }
 }
 
+#map_prov{
+	height:200px;
+	margin-bottom: 10px;
+}
+
 .fh5co-social-icons > a {
   padding: 4px 10px;
   color: #F78536;
