@@ -50,9 +50,9 @@
 					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li class="active"><a href="index.html">Home</a></li>
-							<li><a href="#fh5co-about">About</a></li>
-							<li><a href="#footer">Contact</a></li>
+							<li class="active"><a href="index.html">Αρχική</a></li>
+							<li><a href="#fh5co-about">Σχετικά με</a></li>
+							<li><a href="#footer">Επικοινωνία</a></li>
 							<li><a href="Sign_in.html">Sign in</a></li>
 							<li><a href="Sign_up.html">Sign up</a></li>
 						</ul>
@@ -76,44 +76,90 @@
 										<div class="row">
 										    <div class="col-sm-12 mt">
 											    <div class="input-field">
-													<label for="provider">Provider</label>
+													<label for="provider">Πάροχος</label>
 													<input type="text" class="form-control" id="provider" placeholder="Yava gym.."/>
 												</div>
 											</div>
 										
 											<div class="col-xxs-12 col-xs-6 mt">
 												<div class="input-field">
-													<label for="city">City</label>
+													<label for="city">Πόλη</label>
 													<input type="text" class="form-control" id="city" placeholder="Athens.."/>
 												</div>
 											</div>
 											<div class="col-xxs-12 col-xs-6 mt">
 												<div class="input-field">
-													<label for="postal">Postal code</label>
+													<label for="postal">Τ.Κ.</label>
 													<input type="text" class="form-control" id="postal" placeholder="12244.."/>
 												</div>
 											</div>
+									
+											<div class="col-xxs-3 col-xs-3 col-md-3 mt">
+												<div class="input-field">
+													<label for="pricerange">Εύρος</label>
+													</br>
+													<input type="text" class="form-control" id="pricerangeleft" placeholder="0€.."/>
+												</div>
+											</div>
+											<div class="col-xxs-3 col-xs-3 col-md-3 mt">
+												<div class="input-field">
+												    <label for="pricerange">Τιμής </label>
+													</br>
+													<input type="text" class="form-control" id="pricerangeright" placeholder="..1000€"/>
+												</div>
+											</div>
+										
 										   
-											<div class="col-sm-12 mt">
+											<div class="col-sm-12 col-md-12 col-xs-12" style="margin-bottom:15px;">
 												<section>
-													<label for="class">Category:</label>
-													<br>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>χορός</option>
-														<option value="dance">χορός</option>
-                                                        <option value="gym">γυμναστήριο</option>
-                                                        <option value="personal trainer">personal trainer</option>
-			                                            <option value="martial arts">πολεμικές τέχνες</option>
-			                                            <option value="paintball">paintball</option>
-			                                            <option value="rafting">rafting</option>
-			                                            <option value="climbing">Αναρρίχηση</option>
-			                                            <option value="yoga">yoga</option>
-			                                            <option value="riding">Ιππασία</option>
-                                                        <option value="other">άλλο</option>
-													</select>
-												</section>
+													<label for="categories">Κατηγορία:</label>
+													<div  id="categories">
+													    <label class="cb">Χορός
+                                                            <input type="checkbox" id="dance">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+														<label class="cb">Γυμναστήριο
+                                                            <input type="checkbox" id="gym">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+														<label class="cb">Personal trainer
+                                                            <input type="checkbox" id="pers_trainer">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+														<label class="cb">Πολεμικές τέχνες
+                                                            <input type="checkbox" id="martial_arts">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+														<label class="cb">Paintball
+                                                            <input type="checkbox" id="paintball">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+														<label class="cb">rafting
+                                                            <input type="checkbox" id="rafting">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+														<label class="cb">Αναρρίχηση
+                                                            <input type="checkbox" id="climbing">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+														<label class="cb">Yoga
+                                                            <input type="checkbox" id="yoga">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+														<label class="cb">Ιππασία
+                                                            <input type="checkbox" id="horse_riding">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+														<label class="cb">Άλλο
+                                                            <input type="checkbox" id="other">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+													</div>
+													
+			                                 
 											</div>
 											
+							
 											<div class="col-xs-12">
 												<input type="submit" class="btn btn-primary btn-block" value="Search for Activities">
 											</div>
@@ -133,11 +179,18 @@
 		<div id="fh5co-map" class="fh5co-section-gray">
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-12 col-md-10 col-xs-12 col-xxs-12" id="map">
+					<div class="col-sm-12 col-md-9 col-xs-12 col-xxs-12" id="map">
 					</div>
-					<ul class="col-sm-12 col-md-2 col-xs-12 col-xxs-12" id="activity_res">
-                        <li class="activity_item">List Item</li>
-                        <li class="activity_item">List Item</li>
+					<ul class="col-sm-12 col-md-12 col-xs-12 col-xxs-12"id="activity_res">
+                        <li class="activity_item"><h4 id="ltitle">Title</h4>
+                            <div class="row">
+                                <div class="col-md-9 col-sm-9 col-xs-9" id="ldets">
+								    <div id="laddress" >Address</div>
+								    <div id="ldescription">Description......</div>
+								</div>
+                                <div id="lprice" class="col-md-3 col-sm-3 col-xs-2">Price</div>
+                            </div></li>
+      
 					</ul>
 				</div>
 			</div>
@@ -147,8 +200,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-						<h3>About</h3>
-						<p>Crowdsporting είναι μια crowdsourcing εφαρμογή με σκοπό να κάνει πανεύκολη την εύρεση των καλύτερων προσφορών για οποιαδήποτε αθλητική δραστηριότητα κοντά σας. Βασιζόμαστε σε εσάς να μοιραστείτε με τους υπόλοιπους χρήστες τις αγαπημένες σας τοποθεσίες και δραστηριότητες !  </p>
+						<h3>Σχετικά με:</h3>
+						<p>Το Crowdsporting είναι μια crowdsourcing εφαρμογή με σκοπό να κάνει πανεύκολη την εύρεση των καλύτερων προσφορών για οποιαδήποτε αθλητική δραστηριότητα κοντά σας. Βασιζόμαστε σε εσάς να μοιραστείτε με τους υπόλοιπους χρήστες τις αγαπημένες σας τοποθεσίες και δραστηριότητες !  </p>
 					</div>
 				</div>
 			</div>
@@ -160,7 +213,7 @@
 				<div class="container">
 					<div class="row row-bottom-padded-md">
 						<div class="col-md-6 col-sm-6 col-xs-12 fh5co-footer-link">
-							<h3>Contact Us</h3>
+							<h3>Επικοινωνήστε μαζί μας:</h3>
 							<p>Σχολή Ηλεκτρολόγων Μηχανικών και Μηχανικών Υπολογιστών, Εθνικό Μετσόβιο Πολυτεχνείο <br> Ζωγράφου 157 73 <br> contact@crowdsporting.gr</p>
 						</div>
 					
