@@ -57,11 +57,11 @@ CREATE TABLE `crowdsporting`.`shop_tags`
 DROP TABLE IF EXISTS `crowdsporting`.`user`;
 CREATE TABLE `crowdsporting`.`users`
 (
-  `fullname` VARCHAR(100) NOT NULL UNIQUE,
+  `username` VARCHAR(100) NOT NULL UNIQUE,
   `password` VARCHAR(12)  NOT NULL,
   `points`   INT          NOT NULL DEFAULT 0,
-  `mail`     VARCHAR(320) NOT NULL,
-  PRIMARY KEY (`mail`)
+  `email`     VARCHAR(320) NOT NULL,
+  PRIMARY KEY (`email`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
