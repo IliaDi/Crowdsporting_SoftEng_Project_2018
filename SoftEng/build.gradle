@@ -1,20 +1,71 @@
 plugins {
-    id 'java'
-    id 'maven'
+    id 'java'                               //for java-only project
+    id 'groovy'                             //for mixed java/groovy project
+    id 'war'                                //for genarating war files
+    id 'org.akhikhl.gretty' version '2.0.0' //web app development plugin
 }
 
-version '1.0-SNAPSHOT'
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
 
-sourceCompatibility = 1.8
+//project.group = ...
+//project.version = ...
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.9'
+}
 
 repositories {
     mavenCentral()
+
+    maven {
+        url "http://maven.restlet.org/"
+    }
+    
+    maven { 
+        url "https://jitpack.io" 
+    }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile "javax.servlet:javax.servlet-api:3.1.0"              //the Java servlet libraries    
 
-    compile group: 'org.springframework', name: 'spring-jdbc', version: '2.0.6'
+    compile "org.restlet.jee:org.restlet:2.3.12"                 //for writing RESTful APIs
+    compile "com.google.code.gson:gson:2.8.2"                    //json library
+    compile "org.apache.commons:commons-pool2:2.4.3"             //object pool
+    compile "org.apache.commons:commons-dbcp2:2.1.1"             //db connection pool
+    compile "org.springframework:spring-jdbc:5.0.2.RELEASE"      //spring JDBC classes
+    
+    testCompile "org.codehaus.groovy:groovy-all:2.5.4"
+    testCompile "org.spockframework:spock-core:1.2-groovy-2.5"
+    testCompile "com.github.saikos:softeng18b-rest-api-client:v1.2"
 
+    providedRuntime "javax.servlet:javax.servlet-api:3.1.0"      //provided by the servlet container at runtime
+
+    runtime "org.restlet.jee:org.restlet.ext.servlet:2.3.12"     //Servlet adapter for Restlet framework
+
+    runtime "mysql:mysql-connector-java:5.1.47"                  //the MySQL JDBC driver        
+
+    gretty "mysql:mysql-connector-java:5.1.47"                   //make sure it is also available to the grety plugin
 }
 
+gretty {
+    //scanInterval = 0 //disable hot deployment
+    httpEnabled = false
+    httpsEnabled = true
+    httpPort = 8765
+    httpsPort = 8765
+    contextPath = ''
+    //servletContainer = 'tomcat8' //use the default (jetty)
+    
+    integrationTestTask = 'test'
+}
+
+test {
+
+    systemProperties(System.getProperties())    
+
+    testLogging {
+        showStandardStreams = true
+    }
+}
