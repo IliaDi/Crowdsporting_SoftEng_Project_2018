@@ -1,7 +1,7 @@
 CREATE DATABASE `crowdsporting`;
 
-DROP TABLE IF EXISTS `crowdsporting`.`shop`;
-CREATE TABLE `crowdsporting`.`shop`
+DROP TABLE IF EXISTS `crowdsporting`.`shops`;
+CREATE TABLE `crowdsporting`.`shops`
 (
   `id`          int(11)      NOT NULL AUTO_INCREMENT,
   `name`        VARCHAR(255) NOT NULL UNIQUE,
@@ -17,8 +17,8 @@ CREATE TABLE `crowdsporting`.`shop`
   DEFAULT CHARSET = utf8;
 
 
-DROP TABLE IF EXISTS `crowdsporting`.`product`;
-CREATE TABLE `crowdsporting`.`product`
+DROP TABLE IF EXISTS `crowdsporting`.`products`;
+CREATE TABLE `crowdsporting`.`products`
 (
   `id`          int(11)      NOT NULL AUTO_INCREMENT,
   `name`        varchar(255) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE `crowdsporting`.`product`
   `likes`       int(11),
   `prov_id`     int(11)      NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`prov_id`) REFERENCES `crowdsporting`.`shop` (`id`)
+  FOREIGN KEY (`prov_id`) REFERENCES `crowdsporting`.`shops` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 ) ENGINE = InnoDB
@@ -40,7 +40,7 @@ CREATE TABLE `crowdsporting`.`product_tags`
   `pid` int(11)      NOT NULL DEFAULT '0',
   `tag` varchar(255) NOT NULL,
   PRIMARY KEY (`pid`, `tag`),
-  FOREIGN KEY (`pid`) REFERENCES `crowdsporting`.`product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`pid`) REFERENCES `crowdsporting`.`products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -50,7 +50,7 @@ CREATE TABLE `crowdsporting`.`shop_tags`
   `sid` int(11)      NOT NULL DEFAULT '0',
   `tag` varchar(255) NOT NULL,
   PRIMARY KEY (`sid`, `tag`),
-  FOREIGN KEY (`sid`) REFERENCES `crowdsporting`.`shop` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`sid`) REFERENCES `crowdsporting`.`shops (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -72,6 +72,6 @@ CREATE TABLE `crowdsporting`.`prices`
   `act_id`      int(11) NOT NULL,
   `date`    DATE NOT NULL ,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`act_id`) REFERENCES `crowdsporting`.`product` (`id`)
+  FOREIGN KEY (`act_id`) REFERENCES `crowdsporting`.`products` (`id`)
 ) ENGINE = InnoDB
 DEFAULT CHARSET = utf8;
