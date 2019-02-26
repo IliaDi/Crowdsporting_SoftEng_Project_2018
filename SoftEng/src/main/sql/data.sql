@@ -70,8 +70,7 @@ CREATE TABLE `crowdsporting`.`prices`
 (
   `id`          int(11)      NOT NULL AUTO_INCREMENT,
   `act_id`      int(11) NOT NULL,
-  `dateFrom`    DATE NOT NULL ,
-  `dateTo`      DATE ,
+  `date`    DATE NOT NULL ,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`act_id`) REFERENCES `crowdsporting`.`product` (`id`)
 ) ENGINE = InnoDB

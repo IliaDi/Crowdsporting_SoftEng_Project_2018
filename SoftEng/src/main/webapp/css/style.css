@@ -132,8 +132,12 @@ figure {
     text-align: center !important;
   }
 }
-#new_prov{
+#new_prov {
 	height: 1200px;
+}
+
+#search_act{
+	height: 1000px;
 }
 .fh5co-cover,
 .fh5co-hero {
@@ -143,7 +147,7 @@ figure {
 @media screen and (max-width: 768px) {
   .fh5co-cover,
   .fh5co-hero {
-    height: 700px;
+    height: 1000px;
   }
 }
 .fh5co-cover .fh5co-overlay,
@@ -188,8 +192,12 @@ figure {
     padding: 3em 0;
   }
 }
-#desc_prov{
+#desc_prov {
 	top: 20%;
+}
+
+#desc_act , #desc_search{
+	top: 25%;
 }
 .fh5co-cover .desc {
   top: 30%;
@@ -556,7 +564,7 @@ figure {
     width: 40%;
   }
 }
-.tabulation input[type="text"], input[type=password] ,input[type=number], input[type=url], input[type=email] {
+.tabulation input[type="text"],#description,  input[type=password] ,input[type=number], input[type=url], input[type=email],  input[type=date] {
   background: rgba(0, 0, 0, 0.05);
   border: none;
   box-shadow: none;
@@ -569,24 +577,24 @@ figure {
   border-radius: 0;
   color: #F78536 !important;
 }
-.tabulation input[type="text"]::-webkit-input-placeholder ,input[type=email]::-webkit-input-placeholder , input[type=password]::-webkit-input-placeholder ,input[type=number]::-webkit-input-placeholder, input[type=url]::-webkit-input-placeholder {
+.tabulation input[type="text"]::-webkit-input-placeholder,  input[type=date]::-webkit-input-placeholder ,input[type=email]::-webkit-input-placeholder , input[type=password]::-webkit-input-placeholder ,input[type=number]::-webkit-input-placeholder, input[type=url]::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: #F78536 !important;
 }
-.tabulation input[type="text"]::-moz-placeholder  , input[type=email]::-moz-placeholder , input[type=password]::-moz-placeholder ,input[type=number]::-moz-placeholder, input[type=url]::-moz-placeholder{
+.tabulation input[type="text"]::-moz-placeholder  , input[type=date]::-moz-placeholder , input[type=email]::-moz-placeholder , input[type=password]::-moz-placeholder ,input[type=number]::-moz-placeholder, input[type=url]::-moz-placeholder{
   /* Firefox 19+ */
   color: #F78536 !important;
 }
-.tabulation input[type="text"]:-ms-input-placeholder ,input[type=email]:-ms-input-placeholder , input[type=password]:-ms-input-placeholder ,input[type=number]:-ms-input-placeholder, input[type=url]:-ms-input-placeholder{
+.tabulation input[type="text"]:-ms-input-placeholder, input[type=date]:-ms-input-placeholder ,input[type=email]:-ms-input-placeholder , input[type=password]:-ms-input-placeholder ,input[type=number]:-ms-input-placeholder, input[type=url]:-ms-input-placeholder{
   /* IE 10+ */
   color: #F78536 !important;
 }
-.tabulation input[type="text"]:-moz-placeholder , input[type=email]:-moz-placeholder , input[type=password]:-moz-placeholder ,input[type=number]:-moz-placeholder, input[type=url]:-moz-placeholder {
+.tabulation input[type="text"]:-moz-placeholder, input[type=date]:-moz-placeholder , input[type=email]:-moz-placeholder , input[type=password]:-moz-placeholder ,input[type=number]:-moz-placeholder, input[type=url]:-moz-placeholder {
   /* Firefox 18- */
   color: #F78536 !important;
 }
 @media screen and (max-width: 480px) {
-  .tabulation input[type="text"], input[type=password] ,input[type=number], input[type=url] {
+  .tabulation input[type="text"], input[type=date] , input[type=password] ,input[type=number], input[type=url] {
     width: 55%;
     float: right;
   }
@@ -1607,7 +1615,17 @@ div.cs-select span {
   }
 }
 
-#map_prov{
+#click_map{
+	color: #848484;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#map_prov {
+	height:200px;
+	margin-bottom: 10px;
+}
+#map_search{
 	height:200px;
 	margin-bottom: 10px;
 }
@@ -2102,4 +2120,8 @@ div.cs-select span {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+#dateFrom, #dateTo{
+	margin-bottom: 10px;
 }

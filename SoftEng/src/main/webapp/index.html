@@ -72,10 +72,10 @@
 
 		<!-- end:header-top -->
 	
-		<div class="fh5co-hero">
-			<div class="fh5co-overlay"></div>
-			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);">
-				<div class="desc">    						
+		<div class="fh5co-hero" id="search_act" >
+			<div class="fh5co-overlay" id="search_act"></div>
+			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);" id="search_act" >
+				<div class="desc" id="desc_search">    						
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-10 col-md-10">
@@ -83,46 +83,45 @@
 								
 									<div class="tab-content">
 										<div class="row">
-										    <div class="col-sm-12 mt">
+										    <div class="col-sm-4 mt">
 											    <div class="input-field">
-													<label for="provider">Πάροχος</label>
+													<label for="kw">Tag</label>
+													<input type="text" class="form-control" id="kw" placeholder="..."/>
+												</div>
+											</div>
+											<div class="col-sm-4 col-xs-6">
+											    <div class="input-field">
+													<label for="act">Όνομα δραστηριότητας</label>
+													<input type="text" class="form-control" id="act" placeholder="..."/>
+												</div>
+											</div>
+										    <div class="col-sm-4 col-xs-6">
+											    <div class="input-field">
+													<label for="provider">Όνομα παρόχου</label>
 													<input type="text" class="form-control" id="provider" placeholder="Yava gym.."/>
 												</div>
 											</div>
 										
-											<div class="col-xxs-12 col-xs-6 mt">
-												<div class="input-field">
-													<label for="city">Πόλη</label>
-													<input type="text" class="form-control" id="city" placeholder="Athens.."/>
-												</div>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt">
-												<div class="input-field">
-													<label for="postal">Τ.Κ.</label>
-													<input type="text" class="form-control" id="postal" placeholder="12244.."/>
-												</div>
-											</div>
-									
 											<div class="col-xxs-3 col-xs-3 col-md-3 mt">
 												<div class="input-field">
 													<label for="pricerange">Εύρος</label>
 													</br>
-													<input type="text" class="form-control" id="pricerangeleft" placeholder="0€.."/>
+													<input type="number" class="form-control" id="pricerangeleft" placeholder="0€.."/>
 												</div>
 											</div>
+											
 											<div class="col-xxs-3 col-xs-3 col-md-3 mt">
 												<div class="input-field">
 												    <label for="pricerange">Τιμής </label>
 													</br>
-													<input type="text" class="form-control" id="pricerangeright" placeholder="..1000€"/>
+													<input type="number" class="form-control" id="pricerangeright" placeholder="..1000€"/>
 												</div>
 											</div>
 										
-										   
 											<div class="col-sm-12 col-md-12 col-xs-12" style="margin-bottom:15px;">
 												<section>
 													<label for="categories">Κατηγορία:</label>
-													<div  id="categories">
+													<div  id="categories" style="border:1px solid #ccc; padding:3px;">
 													    <label class="cb">Χορός
                                                             <input type="checkbox" id="dance">
                                                             <span class="checkmark"></span>
@@ -167,6 +166,28 @@
 													
 			                                 
 											</div>
+											<div class="col-sm-5 col-md-5 col-xs-6">
+                                                <label for="dateFrom"><b>Αρχική ημερομηνία* </b></label>
+                                                <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateFrom" required>
+											</div>
+											<div class="col-sm-5 col-md-5 col-xs-6">
+                                                <label for="dateTo"><b>Τελική ημερομηνία* </b></label>
+                                                <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateTo" required>
+											</div>
+											
+											<label for=map_search style="width:100%;">Κάντε κλικ στον χάρτη για να τοποθετηθεί pin στην τοποθεσία ενδιαφέροντος</label>
+											<div class="col-sm-8 col-md-8 col-xs-12 col-xxs-12" id="map_search"> 
+											</div>
+										    
+											
+											<div class="col-xxs-5 col-xs-5 col-md-5 mt">
+												<div class="input-field">
+												    <label for="geoDist">Μέγιστη απόσταση από την θέση </label>
+													</br>
+													<input type="number" class="form-control" id="geoDist" placeholder="..5km"/>
+												</div>
+											</div>
+											
 											
 							
 											<div class="col-xs-12">
@@ -189,17 +210,33 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-9 col-xs-12 col-xxs-12" id="map">
 					</div>
+					<div class="col-sm-5 col-md-5 col-xs-5">
+						<section>
+							<label for="sorting">Ταξινόμηση:</label>
+							<br>
+							<select class="cs-select cs-skin-border" id="sorting">
+								<option value="asc_price" >Τιμή αύξουσα</option>
+								<option value="dist">Μικρότερη απόσταση</option>
+                                <option value="dsc_price">Τιμή φθίνουσα</option>
+                                <option value="n_likes">Αριθμός likes</option> 
+							</select>
+						</section>
+					</div>
 					<ul class="col-sm-12 col-md-12 col-xs-12 col-xxs-12"id="activity_res">
                         <li class="activity_item">
 						    <div class="row">
-							    <div class="col-md-9 col-sm-9 col-xs-9" >
+							    <div class="col-md-8 col-sm-8 col-xs-8" >
 								    <span id="ltitle">Title</span>
+									
 								</div>
+								<form action="/edit_activity.html" class="col-md-2 col-sm-2 col-xs-2" >
+                                       <input type="image" src="images/edit.png" alt="edit" width="35" height="35">
+                                </form>
 								<div class="col-md-3 col-sm-3 col-xs-2">
 								   <img src="images/thumbs_up.png" alt="upvotes" style="width:40px; height:40px; margin-left:10px;">
 								   <span>#</span>
-                            </div>
-							 
+                                </div>
+							</div>
                             <div class="row">
                                 <div class="col-md-9 col-sm-9 col-xs-9" id="ldets">
 								    <div id="laddress" >Address</div>
@@ -283,6 +320,7 @@
 	<!-- Google Map -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&sensor=false"></script>
 	<script src="js/google_map.js"></script>
+	<script src="js/google_map_search.js"></script>
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
