@@ -88,8 +88,8 @@ public class ShopResource extends ServerResource {
         //Read the parameters
         String name = form.getFirstValue("name");
         String description = form.getFirstValue("address");
-        double lng = form.getFirstValue("lng");
-        double lat = form.getFirstValue("lat");
+        String lng = form.getFirstValue("lng");
+        String lat = form.getFirstValue("lat");
         boolean withdrawn = Boolean.valueOf(form.getFirstValue("withdrawn"));
 
         //validate the values (in the general case)

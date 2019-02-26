@@ -323,5 +323,154 @@ public class DataAccess {
         s.setTags(tags);
     }
 
+    public Optional<Shop> deleteShop(long id) {
+
+      TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+      transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+      //Find the shop. Return if it does not exist.
+      Optional<Shop> shop = getShop(id);
+
+      if (!shop.isPresent())
+          return shop;
+
+      long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+          //Delete the shop record using a prepared statement
+          int rowCount = jdbcTemplate.update((Connection con) -> {
+              PreparedStatement ps = con.prepareStatement(
+                  "delete from shop where id = ?"
+              );
+              ps.setLong(1, id);
+              return ps;
+          });
+
+          if (rowCount != 1) {
+              throw new RuntimeException("Shop not deleted");
+          }
+
+
+          return id;
+      });
+
+      return shop;
+
+    }
+
+    public Optional<Shop> updateShop(long id, String name, String address, double lng, double lat, boolean withdrawn) {
+
+      TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+      transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+      //Find the shop. Return if it does not exist.
+      if (!getShop(id).isPresent())
+          return Optional.empty();
+
+      long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+          //Delete the shop record using a prepared statement
+          int rowCount = jdbcTemplate.update((Connection con) -> {
+              PreparedStatement ps = con.prepareStatement(
+                  "update shop set name = ? , address = ?, lng = ?, lat = ?, withdrawn = ? where id = ?"
+              );
+              ps.setString(1, name);
+              ps.setString(2, address);
+              ps.setDouble(3, lng);
+              ps.setDouble(4, lat);
+              ps.setBoolean(5, withdrawn);
+              ps.setLong(6, id);
+              return ps;
+          });
+
+          if (rowCount != 1) {
+              throw new RuntimeException("Shop not updated");
+          }
+
+          /*if (tags != null && tags.length > 0) {
+              jdbcTemplate.batchUpdate("update shop set tag = ? where pid = ?", new AbstractInterruptibleBatchPreparedStatementSetter(){
+                  @Override
+                  protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
+                      if (i < tags.length) {
+                          ps.setLong(1, id);
+                          ps.setString(2, tags[i]);
+                          return true;
+                      }
+                      else {
+                          return false;
+                      }
+                  }
+
+              });
+          }*/
+
+          return id;
+      });
+
+      //Row has been updated
+      Shop shop = new Shop(
+          id,
+          name,
+          address,
+          lng,
+          lat,
+          withdrawn
+      );
+      /*if (tags != null && tags.length > 0) {
+          product.setTags(Arrays.asList(tags));
+      }*/
+
+      return Optional.of(shop);
+
+    }
+
+
+    public Optional<Shop> patchShop(long id, String column, String value) {
+
+      TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+      transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+      //Find the shop. Return if it does not exist.
+      if (!getShop(id).isPresent())
+          return Optional.empty();
+
+      long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+          //Update the shop record using a prepared statement
+          int rowCount = jdbcTemplate.update((Connection con) -> {
+
+              if (column == "withdrawn") {
+                  PreparedStatement ps = con.prepareStatement(
+                      "update shop set withdrawn = ? where id = ?"
+                  );
+                  ps.setBoolean(1, Boolean.valueOf(value));
+                  ps.setLong(2, id);
+
+                  return ps;
+              }
+
+              else {
+                  PreparedStatement ps = con.prepareStatement(
+                      "update shop set " + column + " = ? where id = ?"
+                  );
+                  ps.setString(1, value);
+                  ps.setLong(2, id);
+
+                  return ps;
+              }
+          });
+
+          if (rowCount != 1) {
+              throw new RuntimeException("Shop not updated");
+          }
+
+
+          return id;
+      });
+
+
+      return getShop(id);
+
+    }
+
 
 }
