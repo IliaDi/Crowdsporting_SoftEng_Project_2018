@@ -87,15 +87,16 @@ public class ShopResource extends ServerResource {
         Form form = new Form(entity);
         //Read the parameters
         String name = form.getFirstValue("name");
-        String description = form.getFirstValue("address");
-        String lng = form.getFirstValue("lng");
-        String lat = form.getFirstValue("lat");
+        String address = form.getFirstValue("address");
+        double lng = Double.valueOf(form.getFirstValue("lng"));
+        double lat = Double.valueOf(form.getFirstValue("lat"));
         boolean withdrawn = Boolean.valueOf(form.getFirstValue("withdrawn"));
+        String[] tags = form.getValuesArray("tags");
 
         //validate the values (in the general case)
         //...
 
-        Optional<ProShopduct> optional = dataAccess.updateShop(id, name, address, lng, lat, withdrawn);
+        Optional<Shop> optional = dataAccess.updateShop(id, name, address, lng, lat, withdrawn, tags);
         Shop shop = optional.orElseThrow(() -> new ResourceException(Status.CLIENT_ERROR_NOT_FOUND, "Shop not found - id: " + idAttr));
 
 
@@ -124,17 +125,18 @@ public class ShopResource extends ServerResource {
         Form form = new Form(entity);
         //Read the parameters
         String name = form.getFirstValue("name");
-        String description = form.getFirstValue("address");
+        String address = form.getFirstValue("address");
         String lng = form.getFirstValue("lng");
         String lat = form.getFirstValue("lat");
-        boolean withdrawn = Boolean.valueOf(form.getFirstValue("withdrawn"));
+        String withdrawn = (form.getFirstValue("withdrawn"));
+        String tags = form.getFirstValue("tags");
 
         Optional<Shop> optional = null;
 
         if (name != null) {
             optional = dataAccess.patchShop(id, "name", name);
         }
-        else if (description != null) {
+        else if (address != null) {
             optional = dataAccess.patchShop(id, "address", address);
         }
         else if (lng != null) {
@@ -146,7 +148,9 @@ public class ShopResource extends ServerResource {
         else if (withdrawn != null) {
             optional = dataAccess.patchShop(id, "withdrawn", withdrawn);
         }
-        else {
+        else if (tags != null) {
+            optional = dataAccess.patchShop(id, "tags", tags);
+        }        else {
             throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST, "None field changed");
         }
 

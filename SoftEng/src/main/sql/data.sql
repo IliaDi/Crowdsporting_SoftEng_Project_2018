@@ -74,5 +74,4 @@ CREATE TABLE `crowdsporting`.`prices`
   PRIMARY KEY (`id`),
   FOREIGN KEY (`act_id`) REFERENCES `crowdsporting`.`product` (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
-
+DEFAULT CHARSET = utf8;
