@@ -5,12 +5,10 @@ CREATE TABLE `crowdsporting`.`shop`
 (
   `id`          int(11)      NOT NULL AUTO_INCREMENT,
   `name`        VARCHAR(255) NOT NULL UNIQUE,
-  `street`      VARCHAR(100) NOT NULL,
-  `number`      INT          NOT NULL,
-  `postal_code` INT          NOT NULL,
-  `city`        VARCHAR(100) NOT NULL,
+  `address`     VARCHAR(255) NOT NULL,
   `lng`         DOUBLE,
   `lat`         DOUBLE,
+  `withdrawn`   bit(1) NOT NULL DEFAULT b'0',
   `mail`        VARCHAR(320),
   `phone`       VARCHAR(15)  NOT NULL,
   `website`     VARCHAR(320),
@@ -29,7 +27,6 @@ CREATE TABLE `crowdsporting`.`product`
   `withdrawn`   bool         NOT NULL DEFAULT false,
   `likes`       int(11),
   `prov_id`     int(11)      NOT NULL,
-  `price`       int(11) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`prov_id`) REFERENCES `crowdsporting`.`shop` (`id`)
     ON DELETE CASCADE
@@ -60,11 +57,23 @@ CREATE TABLE `crowdsporting`.`shop_tags`
 DROP TABLE IF EXISTS `crowdsporting`.`user`;
 CREATE TABLE `crowdsporting`.`users`
 (
-  `username` VARCHAR(100) NOT NULL UNIQUE,
+  `fullname` VARCHAR(100) NOT NULL UNIQUE,
   `password` VARCHAR(12)  NOT NULL,
   `points`   INT          NOT NULL DEFAULT 0,
   `mail`     VARCHAR(320) NOT NULL,
   PRIMARY KEY (`mail`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS `crowdsporting`.`prices`;
+CREATE TABLE `crowdsporting`.`prices`
+(
+  `id`          int(11)      NOT NULL AUTO_INCREMENT,
+  `act_id`      int(11) NOT NULL,
+  `dateFrom`    DATE NOT NULL ,
+  `dateTo`      DATE ,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`act_id`) REFERENCES `crowdsporting`.`product` (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
