@@ -9,6 +9,7 @@ CREATE TABLE `crowdsporting`.`shop`
   `number`      INT          NOT NULL,
   `postal_code` INT          NOT NULL,
   `city`        VARCHAR(100) NOT NULL,
+  `address`     VARCHAR(320),
   `lng`         DOUBLE,
   `lat`         DOUBLE,
   `mail`        VARCHAR(320),

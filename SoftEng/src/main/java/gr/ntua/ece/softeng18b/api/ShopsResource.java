@@ -3,7 +3,7 @@ package gr.ntua.ece.softeng18b.api;
 import gr.ntua.ece.softeng18b.conf.Configuration;
 import gr.ntua.ece.softeng18b.data.DataAccess;
 import gr.ntua.ece.softeng18b.data.Limits;
-import gr.ntua.ece.softeng18b.data.model.Shops;
+import gr.ntua.ece.softeng18b.data.model.Shop;
 import org.restlet.data.Form;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
@@ -20,7 +20,7 @@ public class ShopsResource extends ServerResource {
     @Override
     protected Representation get() throws ResourceException {
 
-        List<Shops> shops = dataAccess.getShops(new Limits(0, 10));
+        List<Shop> shops = dataAccess.getShops(new Limits(0, 10));
 
         Map<String, Object> map = new HashMap<>();
         //map.put("start", xxx);
@@ -38,9 +38,9 @@ public class ShopsResource extends ServerResource {
         Form form = new Form(entity);
         //Read the parameters
         String name = form.getFirstValue("name");
-        String description = form.getFirstValue("address");
-        String lng = form.getFirstValue("lng");
-        String lat = form.getFirstValue("lat");
+        String address = form.getFirstValue("address");
+        double lng = Double.valueOf(form.getFirstValue("lng"));
+        double lat = Double.valueOf(form.getFirstValue("lat"));
         boolean withdrawn = Boolean.valueOf(form.getFirstValue("withdrawn"));
 
         //validate the values (in the general case)

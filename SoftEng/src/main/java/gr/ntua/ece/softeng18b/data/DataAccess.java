@@ -297,7 +297,14 @@ public class DataAccess {
 
     }
 
-
+    public List<Shop> getShops(Limits limits) {
+        //TODO: Support limits
+        List<Shop> shops = jdbcTemplate.query("select * from shop order by id", EMPTY_ARGS, new ShopRowMapper());
+        for (Shop p: shops) {
+            fetchTagsOfShop(p);
+        }
+        return shops;
+    }
 
     public Optional<Shop> getShop(long id) {
         Long[] params = new Long[]{id};
@@ -311,6 +318,73 @@ public class DataAccess {
             return Optional.empty();
         }
     }
+
+
+
+      public Shop addShop(String name, String address, double lng, double lat, boolean withdrawn) {
+
+        TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        long id = transactionTemplate.execute((TransactionStatus status) -> {
+
+            //Create the new shop record using a prepared statement
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            int rowCount = jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                    "insert into shop(name, address, lng, lat, withdrawn) values(?, ?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS
+                );
+                ps.setString(1, name);
+                ps.setString(2, address);
+                ps.setDouble(3, lng);
+                ps.setDouble(4, lat);
+                ps.setBoolean(5, withdrawn);
+                return ps;
+            }, keyHolder);
+
+            if (rowCount != 1) {
+                throw new RuntimeException("New shop not inserted");
+            }
+
+            long newId = keyHolder.getKey().longValue();
+
+            /*if (tags != null && tags.length > 0) {
+                jdbcTemplate.batchUpdate("insert into product_tags values(?, ?)", new AbstractInterruptibleBatchPreparedStatementSetter(){
+                    @Override
+                    protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
+                        if (i < tags.length) {
+                            ps.setLong(1, newId);
+                            ps.setString(2, tags[i]);
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+
+                });
+            }*/
+
+            return newId;
+        });
+
+        //New row has been added
+        Shop shop = new Shop(
+            id,
+            name,
+            address,
+            lng,
+            lat,
+            withdrawn
+        );
+      /*  if (tags != null && tags.length > 0) {
+            product.setTags(Arrays.asList(tags));
+        }*/
+
+        return shop;
+    }
+
 
     protected void fetchTagsOfShop(Shop s) {
         Long[] params = new Long[]{s.getId()};
