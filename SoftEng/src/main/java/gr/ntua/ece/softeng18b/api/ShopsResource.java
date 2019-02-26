@@ -38,15 +38,15 @@ public class ShopsResource extends ServerResource {
         Form form = new Form(entity);
         //Read the parameters
         String name = form.getFirstValue("name");
-        String description = form.getFirstValue("description");
-        String category = form.getFirstValue("category");
+        String description = form.getFirstValue("address");
+        String lng = form.getFirstValue("lng");
+        String lat = form.getFirstValue("lat");
         boolean withdrawn = Boolean.valueOf(form.getFirstValue("withdrawn"));
-        String[] tags = form.getValuesArray("tags");
 
         //validate the values (in the general case)
         //...
 
-        Shop shoo = dataAccess.addShop(name, address, lng, lat, withdrawn);
+        Shop shop = dataAccess.addShop(name, address, lng, lat, withdrawn);
 
         return new JsonShopRepresentation(shop);
     }
