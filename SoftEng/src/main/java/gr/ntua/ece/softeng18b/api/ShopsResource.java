@@ -42,11 +42,12 @@ public class ShopsResource extends ServerResource {
         double lng = Double.valueOf(form.getFirstValue("lng"));
         double lat = Double.valueOf(form.getFirstValue("lat"));
         boolean withdrawn = Boolean.valueOf(form.getFirstValue("withdrawn"));
+        String[] tags = form.getValuesArray("tags");
 
         //validate the values (in the general case)
         //...
 
-        Shop shop = dataAccess.addShop(name, address, lng, lat, withdrawn);
+        Shop shop = dataAccess.addShop(name, address, lng, lat, withdrawn, tags);
 
         return new JsonShopRepresentation(shop);
     }

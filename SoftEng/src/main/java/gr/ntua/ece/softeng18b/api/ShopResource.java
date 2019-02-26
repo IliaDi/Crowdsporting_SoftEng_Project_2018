@@ -91,11 +91,12 @@ public class ShopResource extends ServerResource {
         double lng = Double.valueOf(form.getFirstValue("lng"));
         double lat = Double.valueOf(form.getFirstValue("lat"));
         boolean withdrawn = Boolean.valueOf(form.getFirstValue("withdrawn"));
+        String[] tags = form.getValuesArray("tags");
 
         //validate the values (in the general case)
         //...
 
-        Optional<Shop> optional = dataAccess.updateShop(id, name, address, lng, lat, withdrawn);
+        Optional<Shop> optional = dataAccess.updateShop(id, name, address, lng, lat, withdrawn, tags);
         Shop shop = optional.orElseThrow(() -> new ResourceException(Status.CLIENT_ERROR_NOT_FOUND, "Shop not found - id: " + idAttr));
 
 
@@ -128,6 +129,7 @@ public class ShopResource extends ServerResource {
         String lng = form.getFirstValue("lng");
         String lat = form.getFirstValue("lat");
         String withdrawn = (form.getFirstValue("withdrawn"));
+        String tags = form.getFirstValue("tags");
 
         Optional<Shop> optional = null;
 
@@ -146,7 +148,9 @@ public class ShopResource extends ServerResource {
         else if (withdrawn != null) {
             optional = dataAccess.patchShop(id, "withdrawn", withdrawn);
         }
-        else {
+        else if (tags != null) {
+            optional = dataAccess.patchShop(id, "tags", tags);
+        }        else {
             throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST, "None field changed");
         }
 

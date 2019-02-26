@@ -321,7 +321,7 @@ public class DataAccess {
 
 
 
-      public Shop addShop(String name, String address, double lng, double lat, boolean withdrawn) {
+      public Shop addShop(String name, String address, double lng, double lat, boolean withdrawn, String[] tags) {
 
         TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
         transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
@@ -349,7 +349,7 @@ public class DataAccess {
 
             long newId = keyHolder.getKey().longValue();
 
-            /*if (tags != null && tags.length > 0) {
+            if (tags != null && tags.length > 0) {
                 jdbcTemplate.batchUpdate("insert into product_tags values(?, ?)", new AbstractInterruptibleBatchPreparedStatementSetter(){
                     @Override
                     protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
@@ -364,7 +364,7 @@ public class DataAccess {
                     }
 
                 });
-            }*/
+            }
 
             return newId;
         });
@@ -378,9 +378,9 @@ public class DataAccess {
             lat,
             withdrawn
         );
-      /*  if (tags != null && tags.length > 0) {
-            product.setTags(Arrays.asList(tags));
-        }*/
+        if (tags != null && tags.length > 0) {
+            shop.setTags(Arrays.asList(tags));
+        }
 
         return shop;
     }
@@ -431,7 +431,7 @@ public class DataAccess {
 
     }
 
-    public Optional<Shop> updateShop(long id, String name, String address, double lng, double lat, boolean withdrawn) {
+    public Optional<Shop> updateShop(long id, String name, String address, double lng, double lat, boolean withdrawn, String[] tags) {
 
       TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
       transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
@@ -460,7 +460,7 @@ public class DataAccess {
               throw new RuntimeException("Shop not updated");
           }
 
-          /*if (tags != null && tags.length > 0) {
+          if (tags != null && tags.length > 0) {
               jdbcTemplate.batchUpdate("update shop set tag = ? where pid = ?", new AbstractInterruptibleBatchPreparedStatementSetter(){
                   @Override
                   protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
@@ -475,7 +475,7 @@ public class DataAccess {
                   }
 
               });
-          }*/
+          }
 
           return id;
       });
@@ -489,9 +489,9 @@ public class DataAccess {
           lat,
           withdrawn
       );
-      /*if (tags != null && tags.length > 0) {
-          product.setTags(Arrays.asList(tags));
-      }*/
+      if (tags != null && tags.length > 0) {
+          shop.setTags(Arrays.asList(tags));
+      }
 
       return Optional.of(shop);
 
