@@ -132,6 +132,28 @@ UNLOCK TABLES;
 
 
 
+--
+-- Table structure for table `prices`
+--
+
+DROP TABLE IF EXISTS `prices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `prices` (
+  `id`   int(11) NOT NULL AUTO_INCREMENT,
+  `pid`  int(11) NOT NULL,
+  `sid`  int(11) NOT NULL,
+  `date` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_price_prod` FOREIGN KEY (`pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_price_shop` FOREIGN KEY (`sid`) REFERENCES `shop` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+
+
+
 
 --
 -- Table structure for table `user`
