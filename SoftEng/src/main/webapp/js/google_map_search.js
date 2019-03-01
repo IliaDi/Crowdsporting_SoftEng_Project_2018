@@ -38,6 +38,7 @@ google.maps.event.addListener(map, 'click', function(event) {
 
             placeMarker(pos);
             map.setCenter(pos);
+			map.setZoom(15);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
