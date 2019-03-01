@@ -15,7 +15,7 @@
 			(navigator.platform.indexOf("iPod") != -1)
 	    );
 	};
-
+	
 	// Main Menu Superfish
 	var mainMenu = function() {
 
@@ -144,6 +144,7 @@
 		  })
 		}
 	}; 
+	
 
 	// Document on load.
 	$(function(){
@@ -158,5 +159,7 @@
 	
 
 }());
+
+
 
 

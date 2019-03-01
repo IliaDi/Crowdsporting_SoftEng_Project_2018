@@ -564,7 +564,7 @@ figure {
     width: 40%;
   }
 }
-.tabulation input[type="text"],#description,  input[type=password] ,input[type=number], input[type=url], input[type=email],  input[type=date] {
+/*.tabulation input[type="text"],#description, input[type=password] ,input[type=number], input[type=url], input[type=email],  input[type=date] {
   background: rgba(0, 0, 0, 0.05);
   border: none;
   box-shadow: none;
@@ -577,21 +577,21 @@ figure {
   border-radius: 0;
   color: #F78536 !important;
 }
-.tabulation input[type="text"]::-webkit-input-placeholder,  input[type=date]::-webkit-input-placeholder ,input[type=email]::-webkit-input-placeholder , input[type=password]::-webkit-input-placeholder ,input[type=number]::-webkit-input-placeholder, input[type=url]::-webkit-input-placeholder {
-  /* Chrome/Opera/Safari */
+/*.tabulation input[type="text"]::-webkit-input-placeholder,  input[type=date]::-webkit-input-placeholder ,input[type=email]::-webkit-input-placeholder , input[type=password]::-webkit-input-placeholder ,input[type=number]::-webkit-input-placeholder, input[type=url]::-webkit-input-placeholder {
+
   color: #F78536 !important;
 }
 .tabulation input[type="text"]::-moz-placeholder  , input[type=date]::-moz-placeholder , input[type=email]::-moz-placeholder , input[type=password]::-moz-placeholder ,input[type=number]::-moz-placeholder, input[type=url]::-moz-placeholder{
-  /* Firefox 19+ */
+
   color: #F78536 !important;
 }
 .tabulation input[type="text"]:-ms-input-placeholder, input[type=date]:-ms-input-placeholder ,input[type=email]:-ms-input-placeholder , input[type=password]:-ms-input-placeholder ,input[type=number]:-ms-input-placeholder, input[type=url]:-ms-input-placeholder{
-  /* IE 10+ */
+
   color: #F78536 !important;
 }
 .tabulation input[type="text"]:-moz-placeholder, input[type=date]:-moz-placeholder , input[type=email]:-moz-placeholder , input[type=password]:-moz-placeholder ,input[type=number]:-moz-placeholder, input[type=url]:-moz-placeholder {
-  /* Firefox 18- */
-  color: #F78536 !important;
+ 
+  color: #F78536 !important;  */
 }
 @media screen and (max-width: 480px) {
   .tabulation input[type="text"], input[type=date] , input[type=password] ,input[type=number], input[type=url] {
