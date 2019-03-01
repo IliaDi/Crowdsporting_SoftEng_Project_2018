@@ -1,10 +1,9 @@
-new SlimSelect({
+var category = new SlimSelect({
   select: '#cat_multiple' ,
-
 
 });
 
-new SlimSelect({
+var tags_search = new SlimSelect({
   select: '#tags_multiple' ,
 
   addable: function (value) {
@@ -22,7 +21,7 @@ new SlimSelect({
   }
 });
 
-new SlimSelect({
+var provider = new SlimSelect({
   select: '#provider' ,
 
   addable: function (value) {
@@ -40,4 +39,7 @@ new SlimSelect({
   }
 });
 
-
+/*var select = new SlimSelect({
+  select: '#select'
+})
+select.selected() // Will return a string or an array of string values*/
