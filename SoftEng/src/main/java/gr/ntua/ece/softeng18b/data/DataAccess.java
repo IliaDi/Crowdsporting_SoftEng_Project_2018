@@ -55,9 +55,13 @@ public class DataAccess {
         tm = new DataSourceTransactionManager(bds);
     }
 
-    public List<Product> getProducts(Limits limits) {
-        //TODO: Support limits
-        List<Product> products = jdbcTemplate.query("select * from product order by id", EMPTY_ARGS, new ProductRowMapper());
+    public List<Product> getProducts(Limits limits, String column, String order, Integer withdrawn) {
+
+        String withdrawnQuery = "";
+        if (withdrawn != -1)
+          withdrawnQuery = "where withdrawn = " + withdrawn;
+
+        List<Product> products = jdbcTemplate.query("select * from product " + withdrawnQuery + " order by " + column + " " + order + " limit " + Long.toString(limits.getStart()) + "," + Integer.toString(limits.getCount()), EMPTY_ARGS, new ProductRowMapper());
         for (Product p: products) {
             fetchTagsOfProduct(p);
         }
