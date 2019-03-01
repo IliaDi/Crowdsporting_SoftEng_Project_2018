@@ -301,9 +301,12 @@ public class DataAccess {
 
     }
 
-    public List<Shop> getShops(Limits limits) {
-        //TODO: Support limits
-        List<Shop> shops = jdbcTemplate.query("select * from shop order by id", EMPTY_ARGS, new ShopRowMapper());
+    public List<Shop> getShops(Limits limits, String column, String order, Integer withdrawn) {
+        String withdrawnQuery = "";
+        if (withdrawn != -1)
+          withdrawnQuery = "where withdrawn = " + withdrawn;
+
+        List<Shop> shops = jdbcTemplate.query("select * from shop " + withdrawnQuery + " order by " + column + " " + order + " limit " + Long.toString(limits.getStart()) + "," + Integer.toString(limits.getCount()), EMPTY_ARGS, new ShopRowMapper());
         for (Shop p: shops) {
             fetchTagsOfShop(p);
         }
