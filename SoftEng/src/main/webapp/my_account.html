@@ -80,6 +80,10 @@
 												<label for="currentusername"><b>username    </b></label>
 												<input type="image" src="images/edit.png" alt="edit" onclick="myFunction()" width="35" height="35">
 											</div>
+											<div class="col-sm-12 mt" align="center">
+											    <label for="password"><b>Password    </b></label>
+												<input type="image" src="images/edit.png" alt="edit" onclick="myFunction2()" width="35" height="35">
+											</div>
 										    <div class="col-sm-12 mt" align="center">
 											    <label for="points"><b>Πόντοι</b></label>
 											    <div id="points" >XXXX</div>
@@ -90,7 +94,15 @@
                                                  <input type="text" placeholder="new username" class="form-control" id="Uname"><br>
 												 <button type="submit" class="btn btn-primary">Αποθήκευση</button>
 											</div>
-										
+											<div id="editpassword" class="col-sm-5 mt" align="center" style="display: none;">
+                                                 <label for="Pword"><b>Old Password:</b></label>
+												 <span id="password" class="col-sm-12 mt"></span>
+                                                 <input type="password" placeholder="old password" class="form-control" id="Pword"><br>
+												 <label for="NewPword"><b>New Password:</b></label>
+												 <span id="password" class="col-sm-12 mt"></span>
+                                                 <input type="password" placeholder="new password" class="form-control" id="NewPword"><br>
+												 <button type="submit" class="btn btn-primary">Αποθήκευση</button>
+											</div>
 											
 										</div>
 									 </div>
@@ -173,6 +185,16 @@
 	<script> 
 		function myFunction() {
 			var x = document.getElementById("editusername");
+				if (x.style.display === "none") {
+					x.style.display = "block";
+				} else {
+					x.style.display = "none";
+				}
+		}
+	</script>
+	<script> 
+		function myFunction2() {
+			var x = document.getElementById("editpassword");
 				if (x.style.display === "none") {
 					x.style.display = "block";
 				} else {
