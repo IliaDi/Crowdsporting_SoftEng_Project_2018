@@ -32,11 +32,13 @@
 	<link rel="stylesheet" href="css/cs-select.css">
 	<link rel="stylesheet" href="css/cs-skin-border.css">
 	
+	<!--slim select -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.css" rel="stylesheet"></link>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.css" rel="stylesheet"></link>
+	
 	<link rel="stylesheet" href="css/style.css">
 	
-	<link rel="stylesheet" href="semantic-ui-dropdown/dropdown.css">
-	<link rel="stylesheet" href="semantic-ui-dropdown/dropdown.min.css">
-
+    
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
@@ -83,29 +85,25 @@
 								
 									<div class="tab-content">
 										<div class="row">
-										    <div class="col-sm-4 mt">
-											    <div class="input-field">
-													<label for="kw">Tag</label>
-													<input type="text" class="form-control" id="kw" placeholder="..."/>
-												</div>
+										    <div class="col-sm-6 col-xs-6">
+											    <label for="tags_multiple">Tags</label>
+											    <select id="tags_multiple" multiple>
+												    
+												</select>
 											</div>
-											<div class="col-sm-4 col-xs-6">
-											    <div class="input-field">
-													<label for="act">Όνομα δραστηριότητας</label>
-													<input type="text" class="form-control" id="act" placeholder="..."/>
-												</div>
-											</div>
-										    <div class="col-sm-4 col-xs-6">
-											    <div class="input-field">
-													<label for="provider">Όνομα παρόχου</label>
-													<input type="text" class="form-control" id="provider" placeholder="Yava gym.."/>
-												</div>
+											
+										    <div class="col-sm-6 col-xs-6">
+												<label for="provider">Πάροχοι</label>
+												<select id="provider" multiple >
+												    
+												</select>
+												
 											</div>
 										
 											<div class="col-xxs-3 col-xs-3 col-md-3 mt">
 												<div class="input-field">
 													<label for="pricerange">Εύρος</label>
-													</br>
+													
 													<input type="number" class="form-control" id="pricerangeleft" placeholder="0€.."/>
 												</div>
 											</div>
@@ -118,51 +116,21 @@
 												</div>
 											</div>
 										
-											<div class="col-sm-12 col-md-12 col-xs-12" style="margin-bottom:15px;">
-												<section>
-													<label for="categories">Κατηγορία:</label>
-													<div  id="categories" style="border:1px solid #ccc; padding:3px;">
-													    <label class="cb">Χορός
-                                                            <input type="checkbox" id="dance">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-														<label class="cb">Γυμναστήριο
-                                                            <input type="checkbox" id="gym">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-														<label class="cb">Personal trainer
-                                                            <input type="checkbox" id="pers_trainer">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-														<label class="cb">Πολεμικές τέχνες
-                                                            <input type="checkbox" id="martial_arts">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-														<label class="cb">Paintball
-                                                            <input type="checkbox" id="paintball">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-														<label class="cb">rafting
-                                                            <input type="checkbox" id="rafting">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-														<label class="cb">Αναρρίχηση
-                                                            <input type="checkbox" id="climbing">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-														<label class="cb">Yoga
-                                                            <input type="checkbox" id="yoga">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-														<label class="cb">Ιππασία
-                                                            <input type="checkbox" id="horse_riding">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-														<label class="cb">Άλλο
-                                                            <input type="checkbox" id="other">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-													</div>
+											<div class="col-sm-1 col-md-12 col-xs-12" style="margin-bottom:15px;">
+												
+													<label for="cat_multiple">Κατηγορίες:</label>
+													<select  id="cat_multiple" multiple>
+													    <option value="ΧΟΡΟΣ">Χορός</option>
+														<option value="ΓΥΜΝΑΣΤΗΡΙΟ">Γυμναστήριο</option>
+														<option value="PERSONAL_TRAINER">Personal Trainer</option>
+														<option value="MARTIAL_ARTS">Πολεμικές τέχνες</option>
+														<option value="PAINTBALL">Paintball</option>
+														<option value="RAFTING">rafting</option>
+														<option value="CLIMBING">Αναρρίχηση</option>
+														<option value="HORSE_RIDING">Ιππασία</option>
+														<option value="other">Άλλο</option>
+                                                            
+													</select>
 													
 			                                 
 											</div>
@@ -324,7 +292,13 @@
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
-
+    
+	<!--slim select-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>
+	
+	
+	<script src="js/select.js"></script>
      
 	</body>
 </html>
