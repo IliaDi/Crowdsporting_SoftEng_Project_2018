@@ -7,7 +7,7 @@ var address = document.getElementById("street").value;
 var phone = document.getElementById("phone").value;
 var site = document.getElementById("website").value;*/
 
-document.getElementById("newProv").addEventListener("click", createProv());
+document.getElementById("newProv").addEventListener("click", createProv);
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map_prov'), {
 		center: {
@@ -40,6 +40,7 @@ function initMap() {
 
 }
 
+
 var tags = new SlimSelect({
   select: '#tags_prov' ,
 
@@ -64,22 +65,11 @@ var data = {
 	
 };
 
-function createProv() {
-		fetch('/observatory/api/shops', {
-    method: 'POST',
-    body: JSON.stringify(data)
-  })
-  .then(function(response) {
-    if(response.ok) return response.json();
-    throw new Error("HTTP error, status = " + response.status);
-  })
-  .then(function(product) {
-    console.log('all good ');
-  })
-  .catch(function (error) {
-    console.log('Request failure: ', error);
-  });
-	
-}
+function createProv() { }
+
+
+
+
+
 
 
