@@ -52,7 +52,31 @@ var tags = new SlimSelect({
 
 var provTags = tags.selected();
 
+var data = {
+	name: document.getElementById("name").value,
+	address:  document.getElementById("street").value,
+	lng: coord.lat(), 
+	lat: coord.lng(),
+	withdrawn: 0,
+	tags: tags.selected()
+	
+};
+
 function createProv() {
+		fetch('/observatory/api/products', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  .then(function(response) {
+    if(response.ok) return response.json();
+    throw new Error("HTTP error, status = " + response.status);
+  })
+  .then(function(product) {
+    console.log('all good ');
+  })
+  .catch(function (error) {
+    console.log('Request failure: ', error);
+  });
 	
 }
 
