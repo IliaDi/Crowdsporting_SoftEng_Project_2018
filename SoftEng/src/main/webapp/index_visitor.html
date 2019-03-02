@@ -50,11 +50,18 @@
 			<div class="container">
 				<div class="nav-header">
 					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-					<h1 id="fh5co-logo"><a href="index.html">CROWDSPORTING</a></h1>
+					<h1 id="fh5co-logo"><a href="index_visitor.html">CROWDSPORTING</a></h1>
 					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
 							<li class="active"><a href="index_visitor.html">Αρχική</a></li>
+							<li>
+								<a href="#" class="fh5co-sub-ddown">Δημιουργία</a>
+								<ul class="fh5co-sub-menu">
+									<li><a href="new_provider.html">πάροχος</a></li>
+									<li><a href="new_activity.html">δραστηριότητα</a></li>
+								</ul>
+							</li>
 							<li><a href="#fh5co-about">Σχετικά με</a></li>
 							<li><a href="#footer">Επικοινωνία</a></li>
 							<li><a href="Sign_in.html">Sign in</a></li>
@@ -70,7 +77,7 @@
 		<div class="fh5co-hero" id="search_act" >
 			<div class="fh5co-overlay" id="search_act"></div>
 			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);" id="search_act" >
-				<div class="desc" id="desc_search">     						
+				<div class="desc" id="desc_search">    						
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-10 col-md-10">
@@ -78,7 +85,7 @@
 								
 									<div class="tab-content">
 										<div class="row">
-										    <div class="col-sm-6 col-xs-6">
+										    <div class="col-sm-12 col-xs-12">
 											    <label for="tags_multiple">Tags</label>
 											    <select id="tags_multiple" multiple>
 												    
@@ -86,14 +93,21 @@
 											</div>
 											
 										    <div class="col-sm-6 col-xs-6">
-												<label for="provider">Πάροχοι</label>
-												<select id="provider" multiple >
+												<label for="provider_mult">Πάροχοι</label>
+												<select id="provider_mult" multiple >
+												    
+												</select>
+												
+											</div>
+											<div class="col-sm-6 col-xs-6">
+												<label for="activities_mult">Δραστηριότητες</label>
+												<select id="activities_mult" multiple >
 												    
 												</select>
 												
 											</div>
 										
-											<div class="col-xxs-3 col-xs-3 col-md-3 mt">
+											<!--<div class="col-xxs-3 col-xs-3 col-md-3 mt">
 												<div class="input-field">
 													<label for="pricerange">Εύρος</label>
 													
@@ -126,7 +140,7 @@
 													</select>
 													
 			                                 
-											</div>
+											</div> -->
 											<div class="col-sm-5 col-md-5 col-xs-6">
                                                 <label for="dateFrom"><b>Αρχική ημερομηνία* </b></label>
                                                 <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateFrom" required>
@@ -152,7 +166,7 @@
 											
 							
 											<div class="col-xs-12">
-												<input type="submit" class="btn btn-primary btn-block" value="Search for Activities">
+												<input type="submit" id="sear_btn" class="btn btn-primary btn-block" value="Search for Activities" >
 											</div>
 										</div>
 									 </div>
@@ -166,10 +180,9 @@
 			</div>
 
 		</div>
-		
 		<div id="fh5co-map" class="fh5co-section-gray">
 			<div class="container">
-				<div class="row">
+				<div class="row" id="search_res">
 					<div class="col-sm-12 col-md-9 col-xs-12 col-xxs-12" id="map">
 					</div>
 					<div class="col-sm-5 col-md-5 col-xs-5">
@@ -257,7 +270,6 @@
 	<!-- jQuery -->
 
 
-	
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
 	<script src="js/jquery.easing.1.3.js"></script>
@@ -280,10 +292,7 @@
 	<!-- CS Select -->
 	<script src="js/classie.js"></script>
 	<script src="js/selectFx.js"></script>
-	<!-- Google Map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&sensor=false"></script>
-	<script src="js/google_map.js"></script>
-	<script src="js/google_map_search.js"></script>
+	
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
@@ -291,9 +300,17 @@
 	<!--slim select-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>
-	
-	
-	<script src="js/select.js"></script>
-
+	<!--<script src="js/search.js"></script> -->
+	<!-- Google Map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&sensor=false"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&callback=initMap"></script>
+	<script src="js/google_map.js"></script>
+	<script src="js/google_map_search.js"></script>
+	<!--fetch-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js.map"></script>
+     
 	</body>
 </html>
+
