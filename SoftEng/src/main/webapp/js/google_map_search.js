@@ -1,6 +1,6 @@
 var map,infoWindow, google, marker;
 var tags, shops, products , geoLat, geoLng, dateTo, dateFrom;
-var coord ,geoDist sorting;
+var coord, geoDist ;
 /*
 var category = new SlimSelect({
   select: '#cat_multiple' ,
@@ -52,7 +52,6 @@ products = activities.selected();
 dateFrom = document.getElementById("dateFrom").value;
 dateTo = document.getElementById("dateTo").value;
 geoDist = document.getElementById("geoDist").value;
-sorting = document.getElementById("sorting").value;
 
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
