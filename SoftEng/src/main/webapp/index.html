@@ -159,7 +159,7 @@
 											
 							
 											<div class="col-xs-12">
-												<input type="submit" class="btn btn-primary btn-block" value="Search for Activities">
+												<input type="submit" class="btn btn-primary btn-block" value="Search for Activities" id="sear_btn">
 											</div>
 										</div>
 									 </div>
@@ -175,7 +175,7 @@
 		</div>
 		<div id="fh5co-map" class="fh5co-section-gray">
 			<div class="container">
-				<div class="row">
+				<div class="row" id="search_res">
 					<div class="col-sm-12 col-md-9 col-xs-12 col-xxs-12" id="map">
 					</div>
 					<div class="col-sm-5 col-md-5 col-xs-5">
@@ -285,11 +285,7 @@
 	<!-- CS Select -->
 	<script src="js/classie.js"></script>
 	<script src="js/selectFx.js"></script>
-	<!-- Google Map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&sensor=false"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&callback=initMap""></script>
-	<script src="js/google_map.js"></script>
-	<script src="js/google_map_search.js"></script>
+	
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
@@ -297,9 +293,16 @@
 	<!--slim select-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>
-	
-	
-	<script src="js/select.js"></script>
+	<!--<script src="js/search.js"></script> -->
+	<!-- Google Map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&sensor=false"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&callback=initMap"></script>
+	<script src="js/google_map.js"></script>
+	<script src="js/google_map_search.js"></script>
+	<!--fetch-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js.map"></script>
      
 	</body>
 </html>
