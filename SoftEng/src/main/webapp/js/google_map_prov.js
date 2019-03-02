@@ -1,4 +1,6 @@
 var google;
+var coord;
+var marker;
 var name = document.getElementById("name").value;
 var address = document.getElementById("street").value;
 /*var mail = document.getElementById("mail").value;
@@ -63,7 +65,7 @@ var data = {
 };
 
 function createProv() {
-		fetch('/observatory/api/products', {
+		fetch('/observatory/api/shops', {
     method: 'POST',
     body: JSON.stringify(data)
   })
