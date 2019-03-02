@@ -85,7 +85,7 @@
 								
 									<div class="tab-content">
 										<div class="row">
-										    <div class="col-sm-6 col-xs-6">
+										    <div class="col-sm-12 col-xs-12">
 											    <label for="tags_multiple">Tags</label>
 											    <select id="tags_multiple" multiple>
 												    
@@ -93,14 +93,21 @@
 											</div>
 											
 										    <div class="col-sm-6 col-xs-6">
-												<label for="provider">Πάροχοι</label>
-												<select id="provider" multiple >
+												<label for="provider_mult">Πάροχοι</label>
+												<select id="provider_mult" multiple >
+												    
+												</select>
+												
+											</div>
+											<div class="col-sm-6 col-xs-6">
+												<label for="activities_mult">Δραστηριότητες</label>
+												<select id="activities_mult" multiple >
 												    
 												</select>
 												
 											</div>
 										
-											<div class="col-xxs-3 col-xs-3 col-md-3 mt">
+											<!--<div class="col-xxs-3 col-xs-3 col-md-3 mt">
 												<div class="input-field">
 													<label for="pricerange">Εύρος</label>
 													
@@ -133,7 +140,7 @@
 													</select>
 													
 			                                 
-											</div>
+											</div> -->
 											<div class="col-sm-5 col-md-5 col-xs-6">
                                                 <label for="dateFrom"><b>Αρχική ημερομηνία* </b></label>
                                                 <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateFrom" required>
@@ -159,7 +166,7 @@
 											
 							
 											<div class="col-xs-12">
-												<input type="submit" class="btn btn-primary btn-block" value="Search for Activities" id="sear_btn">
+												<input type="submit" id="sear_btn" class="btn btn-primary btn-block" value="Search for Activities" >
 											</div>
 										</div>
 									 </div>

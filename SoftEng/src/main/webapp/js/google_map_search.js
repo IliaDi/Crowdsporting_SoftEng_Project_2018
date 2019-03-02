@@ -1,12 +1,12 @@
-var map;
-var infoWindow;
-var google;
-var tags;
-var shops;
+var map,infoWindow, google, marker;
+var tags, shops, products , geoLat, geoLng, dateTo, dateFrom;
+var coord ,geoDist sorting;
+/*
 var category = new SlimSelect({
   select: '#cat_multiple' ,
 
-});
+});*/
+document.getElementById("sear_btn").addEventListener("click", searchIT);
 
 var tags_search = new SlimSelect({
   select: '#tags_multiple' ,
@@ -17,17 +17,11 @@ var tags_search = new SlimSelect({
 
     // Return the value string
     return value // Optional - value alteration // ex: value.toLowerCase()
-
-    // Optional - Return a valid data object. See methods/setData for list of valid options
-    return {
-      text: value,
-      value: value.toLowerCase()
-    }
   }
 });
 
 var provider = new SlimSelect({
-  select: '#provider' ,
+  select: '#provider_mult' ,
 
   addable: function (value) {
     // return false or null if you do not want to allow value to be submitted
@@ -36,19 +30,30 @@ var provider = new SlimSelect({
     // Return the value string
     return value // Optional - value alteration // ex: value.toLowerCase()
 
-    // Optional - Return a valid data object. See methods/setData for list of valid options
-    return {
-      text: value,
-      value: value.toLowerCase()
-    }
   }
 });
 
+var activities = new SlimSelect({
+  select: '#activities_mult' ,
 
-tags = tags_multiple.selected(); // Will return a string or an array of string values
+  addable: function (value) {
+    // return false or null if you do not want to allow value to be submitted
+    if (value === 'bad') {return false}
+
+    // Return the value string
+    return value // Optional - value alteration // ex: value.toLowerCase()
+
+  }
+});
+
+tags = tags_search.selected(); // Will return a string or an array of string values
 shops = provider.selected();
+products = activities.selected();
+dateFrom = document.getElementById("dateFrom").value;
+dateTo = document.getElementById("dateTo").value;
+geoDist = document.getElementById("geoDist").value;
+sorting = document.getElementById("sorting").value;
 
-var marker, geoLat, geoLng;
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	infoWindow.setPosition(pos);
@@ -79,12 +84,10 @@ function initMap() {
 			});
 		}
 	}
-	var coord;
+	
 
 	google.maps.event.addListener(map, 'click', function (event) {
 		coord = event.latLng;
-		geoLat = coord.lat;
-		geoLng = coord.lng;
 		placeMarker(coord);
 
 	});
@@ -110,5 +113,13 @@ function initMap() {
 	}
 
 }
+
+function searchIT() { window.location.href="#map"; 
+alert('tags\n'+tags_search.selected()+'shops\n'+provider.selected()+'products\n'+ activities.selected()+'dateFrom\n'+document.getElementById("dateFrom").value+'DateTo\n'+document.getElementById("dateTo").value + 'lat\n' + coord.lat() +'lng\n' + coord.lng() ); }
+
+
+
+
+
 
 
