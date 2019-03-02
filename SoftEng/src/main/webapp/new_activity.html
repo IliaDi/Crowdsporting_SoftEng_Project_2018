@@ -31,6 +31,9 @@
 	<!-- CS Select -->
 	<link rel="stylesheet" href="css/cs-select.css">
 	<link rel="stylesheet" href="css/cs-skin-border.css">
+	<!--slim select -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.css" rel="stylesheet"></link>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.css" rel="stylesheet"></link>
 	
 	<link rel="stylesheet" href="css/style.css">
 
@@ -83,7 +86,7 @@
                                                 <label for="name"><b>Όνομα*</b></label>
                                                 <input type="text" placeholder="προσθέστε όνομα.." class="form-control" id="name" required>
 											</div>
-											<div class="col-sm-12 mt">
+											<div class="col-sm-8 mt">
                                                 <label for="description"><b>Περιγραφή*</b></label>
                                                 <textarea rows="3" class="form-control" id="description" required></textarea>
 											</div>
@@ -91,7 +94,7 @@
 												<section>
 													<label for="cat">Κατηγορία*:</label>
 													<br>
-													<select class="cs-select cs-skin-border" id="cat">
+													<select id="cat">
 														<option value="" disabled selected>επιλέξτε..</option>
 														<option value="dance">χορός</option>
                                                         <option value="gym">γυμναστήριο</option>
@@ -115,23 +118,25 @@
                                                 <label for="price"><b>Τιμή* </b></label>
                                                 <input type="text" placeholder="προσθέστε τιμή.." class="form-control" id="price" required>
 											</div>
-											<div class="col-sm-12 mt">
-                                                <label for="tags"><b>Tags* (Χωρίστε με κόμματα)</b></label>
-                                                <input type="text" placeholder="προσθέστε λέξεις κλειδιά.." class="form-control" id="tags" required>
+											<div class="col-sm-5 mt">
+                                                <label for="tags_act"><b>Tags</b></label>
+                                                <select id="tags_act" multiple >
+												    
+												</select>
 											</div>
 											
 											<div class="col-sm-5 col-md-5 col-xs-6">
-                                                <label for="dateFrom"><b>Αρχική ημερομηνία* </b></label>
-                                                <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateFrom" required>
+                                                <label for="dateFroma"><b>Αρχική ημερομηνία* </b></label>
+                                                <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateFroma" style="margin-bottom:15px" required>
 											</div>
 											<div class="col-sm-5 col-md-5 col-xs-6">
-                                                <label for="dateTo"><b>Τελική ημερομηνία* </b></label>
-                                                <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateTo" required>
+                                                <label for="dateToa"><b>Τελική ημερομηνία* </b></label>
+                                                <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateToa" style="margin-bottom:15px" required>
 											</div>
 											
 											
 											<div class="col-sm-5 col-md-5">
-                                                <button type="submit" class="btn btn-primary">Αποθήκευση</button>
+                                                <button type="submit" class="btn btn-primary" id="newActivity">Αποθήκευση</button>
 											</div>
 										</form>	
 										</div>
@@ -211,9 +216,12 @@
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
+	
+	<!--slim select-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>
 	<!--newActivity-->
 	<script src="js/new_activity.js"></script>
-	
 	<!--fetch-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>

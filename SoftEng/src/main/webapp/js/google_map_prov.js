@@ -65,7 +65,8 @@ var data = {
 	
 };
 
-function createProv() { }
+function createProv() { 
+alert("Hello! I am an alert box!!"+ coord.lat() + " " +coord.lng()); }
 
 
 
