@@ -73,23 +73,36 @@
 						<div class="row">
 							<div class="col-sm-10 col-md-10">
 								<div class="tabulation animate-box">
-								
-									<div class="tab-content">
-										<div class="row">
-										    <div class="col-sm-12 mt">
+									<div class="tab-content" align="center">
+										<div class="row" align="center">
+											<div class="col-sm-12 mt" align="center">
+												<img src="images/usericon.png" alt="user icon" style="width:250px;height:250px;"><br>
+												<label for="currentusername"><b>username    </b></label>
+												<input type="image" src="images/edit.png" id="currentusername" alt="edit" onclick="myFunction()" width="35" height="35">
+											</div>
+											<div class="col-sm-12 mt" align="center">
+											    <label for="password"><b>Password    </b></label>
+												<input type="image" src="images/edit.png" alt="edit" onclick="myFunction2()" width="35" height="35">
+											</div>
+										    <div class="col-sm-12 mt" align="center">
 											    <label for="points"><b>Πόντοι</b></label>
 											    <div id="points" >XXXX</div>
 											</div>
-										
-	                                        <div class="col-sm-5 mt">
-                                                 <label for="Uname"><b>Username:</b></label>
-												 <span id="username" class="col-sm-12 mt"></span>
-                                                 <input type="text" placeholder="new username" class="form-control" id="Uname">
+	                                        <div id="editusername" class="col-sm-6 mt" align="center" style="display: none;">
+                                                 <label for="Uname"><b>New Username:</b></label>
+												 <span id="Uname" class="col-sm-12 mt"></span>
+                                                 <input type="text" placeholder="new username" class="form-control" id="Uname"><br>
+												 <button type="submit" class="btn btn-primary">Αποθήκευση username</button>
 											</div>
-											<div class="col-sm-8 mt">
-                                                <button type="submit" class="btn btn-primary">Αποθήκευση</button>
+											<div id="editpassword" class="col-sm-5 mt" align="center" style="display: none;">
+                                                 <label for="Pword"><b>Old Password:</b></label>
+												 <span id="password" class="col-sm-12 mt"></span>
+                                                 <input type="password" placeholder="old password" class="form-control" id="Pword"><br>
+												 <label for="NewPword"><b>New Password:</b></label>
+												 <span id="password" class="col-sm-12 mt"></span>
+                                                 <input type="password" placeholder="new password" class="form-control" id="NewPword"><br>
+												 <button type="submit" class="btn btn-primary">Αποθήκευση password</button>
 											</div>
-										
 											
 										</div>
 									 </div>
@@ -169,6 +182,26 @@
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
+	<script> 
+		function myFunction() {
+			var x = document.getElementById("editusername");
+				if (x.style.display === "none") {
+					x.style.display = "block";
+				} else {
+					x.style.display = "none";
+				}
+		}
+	</script>
+	<script> 
+		function myFunction2() {
+			var x = document.getElementById("editpassword");
+				if (x.style.display === "none") {
+					x.style.display = "block";
+				} else {
+					x.style.display = "none";
+				}
+		}
+	</script>
 
 	</body>
 </html>

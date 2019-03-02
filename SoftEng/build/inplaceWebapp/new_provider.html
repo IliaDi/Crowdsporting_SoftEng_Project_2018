@@ -32,6 +32,10 @@
 	<link rel="stylesheet" href="css/cs-select.css">
 	<link rel="stylesheet" href="css/cs-skin-border.css">
 	
+	<!--slim select -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.css" rel="stylesheet"></link>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.css" rel="stylesheet"></link>
+	
 	<link rel="stylesheet" href="css/style.css">
 
 
@@ -82,7 +86,7 @@
                                                 <label for="name"><b>Όνομα*</b></label>
                                                 <input type="text" placeholder="προσθέστε όνομα.." class="form-control" id="name" required>
 											</div>
-											<div class="col-sm-5 mt">
+											<div class="col-sm-12 mt">
                                                 <label for="street"><b>Διεύθυνση*</b></label>
                                                 <input type="text" placeholder="προσθέστε οδό.." class="form-control" id="street" required>
 											</div>
@@ -90,7 +94,7 @@
 											<span style="width:100%;">Κάντε κλικ στον χάρτη για να τοποθετηθεί pin στην τοποθεσία</span>
 											<div class="col-sm-12 col-md-10 col-xs-12 col-xxs-12" id="map_prov">
 											</div>
-											
+											<!--
 											<div class="col-sm-5 mt">
                                                 <label for="mail"><b>Email</b></label>
                                                 <input type="email" placeholder="προσθέστε e-mail.." class="form-control" id="mail">
@@ -102,13 +106,16 @@
 											<div class="col-sm-5 mt">
                                                 <label for="site"><b>Website</b></label>
                                                 <input type="url" placeholder="προσθέστε website.." class="form-control" id="website">
-											</div>   
-											<div class="col-sm-5 mt">
-                                                <label for="tags"><b>Tags* (Χωρίστε με κόμματα)</b></label>
-                                                <input type="text" placeholder="προσθέστε λέξεις κλειδιά.." class="form-control" id="tags" required>
+											</div>   -->
+											<div class="col-sm-6 col-xs-6" style="margin-bottom:20px;">
+												<label for="tags_prov">Tags</label>
+												<select id="tags_prov" multiple >
+												    
+												</select>
+												
 											</div>
 											<div class="col-sm-8 mt">
-                                                <button type="submit" class="btn btn-primary">Αποθήκευση</button>
+                                                <button type="submit" class="btn btn-primary" id="newProv">Αποθήκευση</button>
 											</div>
 										</form>	
 										</div>
@@ -184,15 +191,22 @@
 	<script src="js/magnific-popup-options.js"></script>
 	<!-- Date Picker -->
 	<script src="js/bootstrap-datepicker.min.js"></script>
-	<!-- CS Select -->
-	<script src="js/classie.js"></script>
-	<script src="js/selectFx.js"></script>
+
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
+	<!--slim select-->
+	<!--slim select-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&sensor=false"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&callback=initMap"></script>
 	<script src="js/google_map_prov.js"></script>
+	<!--fetch-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js.map"></script>
 
 	</body>
 </html>  

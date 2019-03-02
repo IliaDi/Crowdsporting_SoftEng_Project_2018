@@ -1,63 +1,124 @@
-var google;
+var map,infoWindow, google, marker;
+var tags, shops, products , geoLat, geoLng, dateTo, dateFrom;
+var coord, geoDist ;
+/*
+var category = new SlimSelect({
+  select: '#cat_multiple' ,
 
-function init() {
-    // Basic options for a simple Google Map
-    // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
-    var myLatlng = new google.maps.LatLng(37.987954, 23.731890);
+});*/
+document.getElementById("sear_btn").addEventListener("click", searchIT);
 
-    
-    var mapOptions = {
-        // How zoomed in you want the map to start at (always required)
-        zoom: 10,
+var tags_search = new SlimSelect({
+  select: '#tags_multiple' ,
 
-        // The latitude and longitude to center the map (always required)
-        center: myLatlng,
+  addable: function (value) {
+    // return false or null if you do not want to allow value to be submitted
+    if (value === 'bad') {return false}
 
-        // How you would like to style the map. 
-        scrollwheel: false,
-        styles: [{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"hue":"#f49935"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"hue":"#fad959"}]},{"featureType":"road.arterial","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"visibility":"simplified"}]},{"featureType":"road.local","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"hue":"#a1cdfc"},{"saturation":30},{"lightness":49}]}]
-    };
-
-    
-
-    // Get the HTML DOM element that will contain your map 
-    // We are using a div with id="map" seen below in the <body>
-    var mapElement = document.getElementById('map_search');
-
-    // Create the Google Map using out element and options defined above
-    var map = new google.maps.Map(mapElement, mapOptions);
-    
-    var addresses = ['Brooklyn'];
-	
-var marker;
-
-function placeMarker(location) {
-  if ( marker ) {
-    marker.setPosition(location);
-  } else {
-    marker = new google.maps.Marker({
-      position: location,
-      map: map
-    });
+    // Return the value string
+    return value // Optional - value alteration // ex: value.toLowerCase()
   }
-}
-
-google.maps.event.addListener(map, 'click', function(event) {
-  placeMarker(event.latLng);
 });
 
-    for (var x = 0; x < addresses.length; x++) {
-        $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
-            var p = data.results[0].geometry.location
-            var latlng = new google.maps.LatLng(p.lat, p.lng);
-            new google.maps.Marker({
-                position: latlng,
-                map: map,
-                icon: 'images/loc.png'
-            });
+var provider = new SlimSelect({
+  select: '#provider_mult' ,
 
-        });
-    }
-    
+  addable: function (value) {
+    // return false or null if you do not want to allow value to be submitted
+    if (value === 'bad') {return false}
+
+    // Return the value string
+    return value // Optional - value alteration // ex: value.toLowerCase()
+
+  }
+});
+
+var activities = new SlimSelect({
+  select: '#activities_mult' ,
+
+  addable: function (value) {
+    // return false or null if you do not want to allow value to be submitted
+    if (value === 'bad') {return false}
+
+    // Return the value string
+    return value // Optional - value alteration // ex: value.toLowerCase()
+
+  }
+});
+
+tags = tags_search.selected(); // Will return a string or an array of string values
+shops = provider.selected();
+products = activities.selected();
+dateFrom = document.getElementById("dateFrom").value;
+dateTo = document.getElementById("dateTo").value;
+geoDist = document.getElementById("geoDist").value;
+
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	infoWindow.setPosition(pos);
+	infoWindow.setContent(browserHasGeolocation ?
+		'Error: The Geolocation service failed.' :
+		'Error: Your browser doesn\'t support geolocation.');
+	infoWindow.open(map);
 }
-google.maps.event.addDomListener(window, 'load', init);
+
+function initMap() {
+	map = new google.maps.Map(document.getElementById('map_search'), {
+		center: {
+			lat: 37.987954,
+			lng: 23.731890
+		},
+		zoom: 10
+	});
+	infoWindow = new google.maps.InfoWindow;
+	
+
+	function placeMarker(location) {
+		if (marker) {
+			marker.setPosition(location);
+		} else {
+			marker = new google.maps.Marker({
+				position: location,
+				map: map
+			});
+		}
+	}
+	
+
+	google.maps.event.addListener(map, 'click', function (event) {
+		coord = event.latLng;
+		placeMarker(coord);
+
+	});
+
+
+	// Try HTML5 geolocation.
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			var pos = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+			};
+
+			placeMarker(pos);
+			map.setCenter(pos);
+			map.setZoom(15);
+		}, function () {
+			handleLocationError(true, infoWindow, map.getCenter());
+		});
+	} else {
+		// Browser doesn't support Geolocation
+		handleLocationError(false, infoWindow, map.getCenter());
+	}
+
+}
+
+function searchIT() { window.location.href="#map"; 
+alert('tags\n'+tags_search.selected()+'shops\n'+provider.selected()+'products\n'+ activities.selected()+'dateFrom\n'+document.getElementById("dateFrom").value+'DateTo\n'+document.getElementById("dateTo").value + 'lat\n' + coord.lat() +'lng\n' + coord.lng() ); }
+
+
+
+
+
+
+

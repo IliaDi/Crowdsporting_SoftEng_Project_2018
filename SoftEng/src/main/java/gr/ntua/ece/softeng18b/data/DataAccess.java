@@ -2,6 +2,7 @@ package gr.ntua.ece.softeng18b.data;
 
 import gr.ntua.ece.softeng18b.data.model.Product;
 import gr.ntua.ece.softeng18b.data.model.Shop;
+import gr.ntua.ece.softeng18b.data.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -553,5 +554,132 @@ public class DataAccess {
 
     }
 
+    public User addUser(String email, String fullname, String password) {
+
+        TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        long id = transactionTemplate.execute((TransactionStatus status) -> {
+
+            //Create the new user record using a prepared statement
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            int rowCount = jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                    "insert into user(email, fullname, password) values(?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS
+                );
+                ps.setString(1, email);
+                ps.setString(2, fullname);
+                ps.setString(3, password);
+                return ps;
+            }, keyHolder);
+
+            if (rowCount != 1) {
+                throw new RuntimeException("New user not inserted");
+            }
+
+            long newId = keyHolder.getKey().longValue();
+
+            return newId;
+        });
+
+        //New row has been added
+        User user = new User(
+            id,
+            email,
+            fullname,
+            password
+        );
+
+        return user;
+    }
+
+    public Optional<User> getUser(long id) {
+        Long[] params = new Long[]{id};
+        List<User> users = jdbcTemplate.query("select * from user where id = ?", params, new UserRowMapper());
+        if (users.size() == 1)  {
+            User p = users.get(0);
+            return Optional.of(p);
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<User> deleteUser(long id) {
+
+      TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+      transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+      //Find the user. Return if it does not exist.
+      Optional<User> user = getUser(id);
+
+      if (!user.isPresent())
+          return user;
+
+      long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+          //Delete the user record using a prepared statement
+          int rowCount = jdbcTemplate.update((Connection con) -> {
+              PreparedStatement ps = con.prepareStatement(
+                  "delete from user where id = ?"
+              );
+              ps.setLong(1, id);
+              return ps;
+          });
+
+          if (rowCount != 1) {
+              throw new RuntimeException("User not deleted");
+          }
+
+
+          return id;
+      });
+
+      return user;
+
+    }
+
+    public Optional<User> updateUser(long id, String email, String fullname, String password) {
+
+      TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+      transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+      //Find the user. Return if it does not exist.
+      if (!getUser(id).isPresent())
+          return Optional.empty();
+
+      long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+          //Delete the product record using a prepared statement
+          int rowCount = jdbcTemplate.update((Connection con) -> {
+              PreparedStatement ps = con.prepareStatement(
+                  "update user set email = ? , fullname = ?, password = ?"
+              );
+              ps.setString(1, email);
+              ps.setString(2, fullname);
+              ps.setString(3, password);
+              ps.setLong(4, id);
+              return ps;
+          });
+
+          if (rowCount != 1) {
+              throw new RuntimeException("User not updated");
+          }
+
+          return id;
+      });
+
+      //Row has been updated
+      User user = new User(
+          id,
+          email,
+          fullname,
+          password
+      );
+
+      return Optional.of(user);
+
+    }
 
 }
