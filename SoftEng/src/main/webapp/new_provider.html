@@ -103,9 +103,12 @@
                                                 <label for="site"><b>Website</b></label>
                                                 <input type="url" placeholder="προσθέστε website.." class="form-control" id="website">
 											</div>   
-											<div class="col-sm-5 mt">
-                                                <label for="tags"><b>Tags* (Χωρίστε με κόμματα)</b></label>
-                                                <input type="text" placeholder="προσθέστε λέξεις κλειδιά.." class="form-control" id="tags" required>
+											<div class="col-sm-6 col-xs-6">
+												<label for="tags_prov">Tags*</label>
+												<select id="tags_prov" multiple >
+												    
+												</select>
+												
 											</div>
 											<div class="col-sm-8 mt">
                                                 <button type="submit" class="btn btn-primary">Αποθήκευση</button>
@@ -184,15 +187,21 @@
 	<script src="js/magnific-popup-options.js"></script>
 	<!-- Date Picker -->
 	<script src="js/bootstrap-datepicker.min.js"></script>
-	<!-- CS Select -->
-	<script src="js/classie.js"></script>
-	<script src="js/selectFx.js"></script>
+
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
+	<!--slim select-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&sensor=false"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&callback=initMap"></script>
 	<script src="js/google_map_prov.js"></script>
+	<!--fetch-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js.map"></script>
 
 	</body>
 </html>  
