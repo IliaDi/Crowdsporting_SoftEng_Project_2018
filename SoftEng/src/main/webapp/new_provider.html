@@ -32,6 +32,10 @@
 	<link rel="stylesheet" href="css/cs-select.css">
 	<link rel="stylesheet" href="css/cs-skin-border.css">
 	
+	<!--slim select -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.css" rel="stylesheet"></link>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.css" rel="stylesheet"></link>
+	
 	<link rel="stylesheet" href="css/style.css">
 
 
@@ -90,7 +94,7 @@
 											<span style="width:100%;">Κάντε κλικ στον χάρτη για να τοποθετηθεί pin στην τοποθεσία</span>
 											<div class="col-sm-12 col-md-10 col-xs-12 col-xxs-12" id="map_prov">
 											</div>
-											
+											<!--
 											<div class="col-sm-5 mt">
                                                 <label for="mail"><b>Email</b></label>
                                                 <input type="email" placeholder="προσθέστε e-mail.." class="form-control" id="mail">
@@ -102,8 +106,8 @@
 											<div class="col-sm-5 mt">
                                                 <label for="site"><b>Website</b></label>
                                                 <input type="url" placeholder="προσθέστε website.." class="form-control" id="website">
-											</div>   
-											<div class="col-sm-6 col-xs-6">
+											</div>   -->
+											<div class="col-sm-6 col-xs-6" style="margin-bottom:20px;">
 												<label for="tags_prov">Tags*</label>
 												<select id="tags_prov" multiple >
 												    
@@ -111,7 +115,7 @@
 												
 											</div>
 											<div class="col-sm-8 mt">
-                                                <button type="submit" class="btn btn-primary">Αποθήκευση</button>
+                                                <button type="submit" class="btn btn-primary" id="newProv">Αποθήκευση</button>
 											</div>
 										</form>	
 										</div>
@@ -191,6 +195,7 @@
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
+	<!--slim select-->
 	<!--slim select-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>

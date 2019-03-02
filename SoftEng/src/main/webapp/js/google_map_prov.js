@@ -1,11 +1,11 @@
 var google;
 var name = document.getElementById("name").value;
 var address = document.getElementById("street").value;
-var mail = document.getElementById("mail").value;
+/*var mail = document.getElementById("mail").value;
 var phone = document.getElementById("phone").value;
-var site = document.getElementById("website").value;
+var site = document.getElementById("website").value;*/
 
-
+document.getElementById("newProv").addEventListener("click", createProv());
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map_prov'), {
 		center: {
@@ -49,3 +49,11 @@ var tags = new SlimSelect({
     return value // Optional - value alteration // ex: value.toLowerCase()
   }
 });
+
+var provTags = tags.selected();
+
+function createProv() {
+	
+}
+
+
