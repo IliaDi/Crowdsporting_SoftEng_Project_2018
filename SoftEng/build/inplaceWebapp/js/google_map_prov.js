@@ -1,11 +1,12 @@
 var google;
 var coord;
 var marker;
+var clicked = false;
 /*var mail = document.getElementById("mail").value;
 var phone = document.getElementById("phone").value;
 var site = document.getElementById("website").value;*/
 
-document.getElementById("newProv").addEventListener("click", createProv);
+document.getElementById("newProv").addEventListener("click", validateProvForm);
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map_prov'), {
 		center: {
@@ -32,7 +33,7 @@ function initMap() {
 	google.maps.event.addListener(map, 'click', function (event) {
 		coord = event.latLng;
 		placeMarker(coord);
-
+		clicked = true;
 	});
 
 
@@ -95,4 +96,19 @@ function createProv() {
 	  });
 
 	//alert("Hello! I am an alert box!!"+alltags + address); */
+}
+
+function validateProvForm() {	
+			var nameentry=document.getElementById("name").value;
+			var streetentry=document.getElementById("street").value;
+			if(nameentry=="" || streetentry=="") {
+				alert("Please fill both name and address fields!");
+				return false; }
+			else if(clicked!=true) {
+				alert("Please pin the location on the map!"); 
+				return false; }
+			else { 
+				createProv();
+				return true;
+			}
 }
