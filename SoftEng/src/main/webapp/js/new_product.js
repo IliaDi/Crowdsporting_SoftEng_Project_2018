@@ -11,8 +11,13 @@ var tags_product = new SlimSelect({
   }
 });
 
+var category_prod = new SlimSelect({
+  select: '#cat' ,
+
+
+});
+
 function createProd() { 
-	//alert("bob");
 	var name = document.getElementById("name").value;
 	var address = document.getElementById("description").value;
 	var tags = tags_product.selected();
