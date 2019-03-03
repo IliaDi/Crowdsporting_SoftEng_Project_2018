@@ -21,6 +21,7 @@ function createProd() {
 	var name = document.getElementById("name").value;
 	var description = document.getElementById("description").value;
 	var tags = tags_product.selected();
+	var category = category_prod.selected();
 
 
 	var alltags = "";
@@ -28,13 +29,13 @@ function createProd() {
 	    alltags = alltags + "&tags=" + tag;
 	  });
 	  
-	fetch('/observatory/api/shops', {
+	fetch('/observatory/api/products', {
 	    method: 'POST',
 	    headers: {
             "Content-Type": "application/json",
             // "Content-Type": "application/x-www-form-urlencoded",
         },
-	    body: "name=" +name +"&description=" + description + alltags
+	    body: "name=" +name +"&description=" + description +"&category="+category + alltags
 	  })
 	  .then(function(response) {
 	    if(response.status==200) return response.json();
