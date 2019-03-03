@@ -358,7 +358,7 @@ public class DataAccess {
             long newId = keyHolder.getKey().longValue();
 
             if (tags != null && tags.length > 0) {
-                jdbcTemplate.batchUpdate("insert into product_tags values(?, ?)", new AbstractInterruptibleBatchPreparedStatementSetter(){
+                jdbcTemplate.batchUpdate("insert into shop_tags values(?, ?)", new AbstractInterruptibleBatchPreparedStatementSetter(){
                     @Override
                     protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
                         if (i < tags.length) {
