@@ -70,6 +70,22 @@ public class DataAccess {
         return products;
     }
 
+    //get all the products with this name
+    public List<Product> getProductsName(String name) {
+        String[] params = new String[]{name};
+        List<Product> products = jdbcTemplate.query("select * from product where name = ?", params, new ProductRowMapper());
+        if (products.isEmpty()) {
+            return products;
+        }
+        else {
+            for(Product p: products) {
+                fetchTagsOfProduct(p);
+            }
+        }
+        return products;   
+    }
+
+
     public Product addProduct(String name, String description, String category, boolean withdrawn, String[] tags ) {
 
         TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
@@ -143,21 +159,6 @@ public class DataAccess {
         else {
             return Optional.empty();
         }
-    }
-
-    //get all the products with this name
-    public List<Product> getProductsName(String name) {
-        String[] params = new String[]{name};
-        List<Product> products = jdbcTemplate.query("select * from product where name = ?", params, new ProductRowMapper());
-        if (products.isEmpty()) {
-            return products;
-        }
-        else {
-            for(Product p: products) {
-                fetchTagsOfProduct(p);
-            }
-        }
-        return products;   
     }
 
     protected void fetchTagsOfProduct(Product p) {
@@ -330,6 +331,20 @@ public class DataAccess {
         return shops;
     }
 
+    //get shop by its name
+    public Optional<Shop> getShopName(String name) {
+        String[] params = new String[]{name};
+        List<Shop> shops = jdbcTemplate.query("select * from shop where name = ?", params, new ShopRowMapper());
+        if (shops.size() == 1)  {
+            Shop s = shops.get(0);
+            fetchTagsOfShop(s);
+            return Optional.of(s);
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
     public Optional<Shop> getShop(long id) {
         Long[] params = new Long[]{id};
         List<Shop> shops = jdbcTemplate.query("select * from shop where id = ?", params, new ShopRowMapper());
@@ -343,9 +358,7 @@ public class DataAccess {
         }
     }
 
-
-
-      public Shop addShop(String name, String address, double lng, double lat, boolean withdrawn, String[] tags) {
+    public Shop addShop(String name, String address, double lng, double lat, boolean withdrawn, String[] tags) {
 
         TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
         transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
