@@ -46,6 +46,24 @@ var activities = new SlimSelect({
   }
 });
 
+var sprice = new SlimSelect({
+  select: '#sort_price' ,
+  showSearch: false
+
+});
+
+var sdist = new SlimSelect({
+  select: '#sort_dist' ,
+  showSearch: false
+
+});
+
+var sdate = new SlimSelect({
+  select: '#sort_date' ,
+  showSearch: false
+
+});
+
 tags = tags_search.selected(); // Will return a string or an array of string values
 shops = provider.selected();
 products = activities.selected();
