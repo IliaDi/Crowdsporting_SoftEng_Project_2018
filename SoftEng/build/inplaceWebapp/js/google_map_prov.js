@@ -1,8 +1,6 @@
 var google;
 var coord;
 var marker;
-var name = document.getElementById("name").value;
-var address = document.getElementById("street").value;
 /*var mail = document.getElementById("mail").value;
 var phone = document.getElementById("phone").value;
 var site = document.getElementById("website").value;*/
@@ -41,7 +39,7 @@ function initMap() {
 }
 
 
-var tags = new SlimSelect({
+var tags_provider = new SlimSelect({
   select: '#tags_prov' ,
 
   addable: function (value) {
@@ -53,9 +51,9 @@ var tags = new SlimSelect({
   }
 });
 
-var provTags = tags.selected();
 
-var data = {
+
+/*var data = {
 	name: document.getElementById("name").value,
 	address:  document.getElementById("street").value,
 	lng: coord.lat(), 
@@ -63,13 +61,34 @@ var data = {
 	withdrawn: 0,
 	tags: tags.selected()
 	
-};
+};*/
 
-function createProv() { }
-
-
-
-
-
+function createProv() { 
+	var name = document.getElementById("name").value;
+	var address = document.getElementById("street").value;
+	var tags = tags_provider.selected();
 
 
+	var alltags = "";
+	  tags.forEach(function(tag){
+	    alltags = alltags + "&tags=" + tag;
+	  });
+
+	fetch('/observatory/api/shops', {
+	    method: 'POST',
+
+	    body: "name=" +name +"&address=" + address +"&lng=" + coord.lng() + "&lat=" + coord.lat() + alltags
+	  })
+	  .then(function(response) {
+	    if(response.ok) return response.json();
+	    throw new Error("HTTP error, status = " + response.status);
+	  })
+	  .then(function(product) {
+	    console.log('all good ');
+	  })
+	  .catch(function (error) {
+	    console.log('Request failure: ', error);
+	  });
+
+	//alert("Hello! I am an alert box!!"+alltags + address); 
+}

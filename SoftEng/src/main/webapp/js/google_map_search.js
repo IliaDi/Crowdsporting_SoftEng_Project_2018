@@ -131,8 +131,30 @@ function initMap() {
 */
 }
 
-function searchIT() { window.location.href="#map"; //εδώ πρέπει να γίνει GET με τις παραπάνω παραμέτρους , μετά το αποτέλεσμα να μορφοποιηθεί στη λίστα , και στο τέλος επειδή κάθε στοιχείο της λίστας έχει και ένα edit κουμπί , να καλείται μια PATCH (γραμμένη σε αυτό το αρχείο) η οποία να παίρνει το id αυτού του list item
-alert('tags\n'+tags_search.selected()+'shops\n'+provider.selected()+'products\n'+ activities.selected()+'dateFrom\n'+document.getElementById("dateFrom").value+'DateTo\n'+document.getElementById("dateTo").value + 'lat\n' + coord.lat() +'lng\n' + coord.lng() ); }
+function searchIT() { 
+//window.location.href="#map"; //εδώ πρέπει να γίνει GET με τις παραπάνω παραμέτρους , μετά το αποτέλεσμα να μορφοποιηθεί στη λίστα , και στο τέλος επειδή κάθε στοιχείο της λίστας έχει και ένα edit κουμπί , να καλείται μια PATCH (γραμμένη σε αυτό το αρχείο) η οποία να παίρνει το id αυτού του list item
+//alert('tags\n'+tags_search.selected()+'shops\n'+provider.selected()+'products\n'+ activities.selected()+'dateFrom\n'+document.getElementById("dateFrom").value+'DateTo\n'+document.getElementById("dateTo").value + 'lat\n' + coord.lat() +'lng\n' + coord.lng() ); 
+
+fetch('/observatory/api/shops', {method: 'GET'})
+    .then(function(response) {
+      if(response.ok) return response.json();
+      throw new Error("HTTP error, status = " + response.status);
+    })
+    .then(function(json) {
+      let results = json.shops;
+      var bob =  results[0].name;
+   	  alert(bob);
+    })
+    .catch(function(error) {
+      var p = document.createElement('p');
+      p.appendChild(
+        document.createTextNode('Error: ' + error.message)
+      );
+      document.body.insertBefore(p, myList);
+    });
+
+   
+}
 
 
 

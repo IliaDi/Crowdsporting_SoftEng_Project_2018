@@ -166,7 +166,7 @@
 											
 							
 											<div class="col-xs-12">
-												<input type="submit" id="sear_btn" class="btn btn-primary btn-block" value="Search for Activities" >
+												<input type="submit" id="sear_btn" class="btn btn-primary btn-block" value="Search for Activities" onclick="validateForm()">
 											</div>
 										</div>
 									 </div>
@@ -296,7 +296,24 @@
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
-    
+	<script>
+		function validateForm() {	
+			var start=document.getElementById("dateFrom").value;
+			var end=document.getElementById("dateTo").value;
+			if((start!="" && end=="") ||  (start=="" && end!="")) {
+				alert("Please fill both start and finish dates!");
+				return false; }
+			else return true;
+			//var fields = [document.getElementById(dateFrom), document.getElementById(dateTo)]
+			//var i, l = fields.length;
+			//var fieldname;
+			//for (i = 0; i < l; i++) {
+			//fieldname = fields[i];
+			//if (document.forms["register"][fieldname].value === "") {
+				//alert(fieldname + " can not be empty");
+				//return false;
+	}	
+	</script>  
 	<!--slim select-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>
