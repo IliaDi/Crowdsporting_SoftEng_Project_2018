@@ -34,7 +34,7 @@ function validateProdForm() {
 			var nameentry=document.getElementById("name").value;
 			var descrentry=document.getElementById("description").value;
 			var catentry=document.getElementById("cat").value;
-			if(nameentry=="" || descrentry=="" || catentry==null) {
+			if(nameentry=="" || descrentry=="" || catentry=="") {
 				alert("Please fill all required fields!");
 				return false; }
 			else { 
