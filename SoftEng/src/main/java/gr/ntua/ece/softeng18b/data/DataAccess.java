@@ -795,7 +795,7 @@ public class DataAccess {
 
     }
     
-    public Optional<User> getUser(String  username) {
+    public Optional<User> getUserName(String  username) {
         String[] params = new String[]{username};
         List<User> users = jdbcTemplate.query("select * from user where fullname = ?", params, new UserRowMapper());
         if (users.size() == 1)  {
