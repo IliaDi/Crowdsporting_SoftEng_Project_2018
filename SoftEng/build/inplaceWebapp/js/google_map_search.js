@@ -134,26 +134,15 @@ function initMap() {
 }
 
 function searchIT() { 
-//window.location.href="#map"; //εδώ πρέπει να γίνει GET με τις παραπάνω παραμέτρους , μετά το αποτέλεσμα να μορφοποιηθεί στη λίστα , και στο τέλος επειδή κάθε στοιχείο της λίστας έχει και ένα edit κουμπί , να καλείται μια PATCH (γραμμένη σε αυτό το αρχείο) η οποία να παίρνει το id αυτού του list item
-//alert('tags\n'+tags_search.selected()+'shops\n'+provider.selected()+'products\n'+ activities.selected()+'dateFrom\n'+document.getElementById("dateFrom").value+'DateTo\n'+document.getElementById("dateTo").value + 'lat\n' + coord.lat() +'lng\n' + coord.lng() ); 
+window.location.href="#map"; 
+let tags= tags_search.selected(); 
+let shops = provider.selected(); 
+let activities = activities.selected(); 
+let dateFrom = document.getElementById("dateFrom").value;
+let dateTo = document.getElementById("dateTo").value; 
+let myLat = coord.lat();
+let myLng = coord.lng() ; 
 
-fetch('/observatory/api/shops', {method: 'GET'})
-    .then(function(response) {
-      if(response.ok) return response.json();
-      throw new Error("HTTP error, status = " + response.status);
-    })
-    .then(function(json) {
-      let results = json.shops;
-      var bob =  results[0].name;
-   	  alert(bob);
-    })
-    .catch(function(error) {
-      var p = document.createElement('p');
-      p.appendChild(
-        document.createTextNode('Error: ' + error.message)
-      );
-      document.body.insertBefore(p, myList);
-    });
 
    
 }
@@ -173,6 +162,29 @@ function validateForm() {
 				return true;
 			}
 }
+
+
+var google;
+
+function init() {
+    // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+    var myLatlng = new google.maps.LatLng(37.987954, 23.731890);
+
+    
+    var mapOptions = {
+        zoom: 10,
+        center: myLatlng,
+        scrollwheel: false,
+        styles: [{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"hue":"#f49935"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"hue":"#fad959"}]},{"featureType":"road.arterial","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"visibility":"simplified"}]},{"featureType":"road.local","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"hue":"#a1cdfc"},{"saturation":30},{"lightness":49}]}]
+    };
+
+    var mapElement = document.getElementById('map');
+
+    var map = new google.maps.Map(mapElement, mapOptions);
+    
+    
+}
+google.maps.event.addDomListener(window, 'load', init);
 
 
 

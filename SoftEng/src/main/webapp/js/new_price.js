@@ -1,4 +1,3 @@
-
 document.getElementById("prov_search").addEventListener("click", getshops);
 document.getElementById("act_search").addEventListener("click", getproducts);
 document.getElementById("newActivity").addEventListener("click", createAct);
