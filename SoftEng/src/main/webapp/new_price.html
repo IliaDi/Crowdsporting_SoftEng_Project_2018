@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html class="no-js"> 
 	<head>
@@ -31,7 +30,6 @@
 	<!-- CS Select -->
 	<link rel="stylesheet" href="css/cs-select.css">
 	<link rel="stylesheet" href="css/cs-skin-border.css">
-	
 	<!--slim select -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.css" rel="stylesheet"></link>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.css" rel="stylesheet"></link>
@@ -72,8 +70,8 @@
 			</div>
 		</header>
 	
-	   <div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);" id="new_prov">
-				<div class="desc" id="desc_prov">    						
+	   <div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);" >
+				<div class="desc" id="desc_act">    						
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-10 col-md-10">
@@ -82,41 +80,87 @@
 									<div class="tab-content">
 										<div class="row">
 										<form>
-								            <h3 class="col-sm-12 col-md-12 col-xs-12"> Νέα καταχώρηση </h3>
-	                                        <div class="col-sm-12 mt">
-                                                <label for="name"><b>Όνομα*</b></label>
-                                                <input type="text" placeholder="προσθέστε όνομα.." class="form-control" id="name" required>
-											</div>
-											<div class="col-sm-12 mt">
-                                                <label for="street"><b>Διεύθυνση*</b></label>
-                                                <input type="text" placeholder="προσθέστε οδό.." class="form-control" id="street" required>
-											</div>
-											
-											<span style="width:100%;">Κάντε κλικ στον χάρτη για να τοποθετηθεί pin στην τοποθεσία</span>
-											<div class="col-sm-12 col-md-10 col-xs-12 col-xxs-12" id="map_prov">
-											</div>
-											<!--
-											<div class="col-sm-5 mt">
-                                                <label for="mail"><b>Email</b></label>
-                                                <input type="email" placeholder="προσθέστε e-mail.." class="form-control" id="mail">
-											</div>
-											<div class="col-sm-5 mt">
-                                                <label for="phone"><b>Τηλέφωνο*</b></label>
-                                                <input type="number" placeholder="προσθέστε τηλέφωνο.." class="form-control" id="phone" required>
-											</div>
-											<div class="col-sm-5 mt">
-                                                <label for="site"><b>Website</b></label>
-                                                <input type="url" placeholder="προσθέστε website.." class="form-control" id="website">
-											</div>   -->
-											<div class="col-sm-6 col-xs-6" style="margin-bottom:20px;">
-												<label for="tags_prov">Tags</label>
-												<select id="tags_prov" multiple >
+								
+	                                        <div class="col-sm-10 col-md-10">
+											    <h3> Νέα καταχώρηση </h3>
+                                                
+												<div class="col-sm-4 col-md-4">
+												   <label for="name"><b>Όνομα δραστηριότητας*</b></label>
+												</div>
+												<div class="col-sm-8 col-md-8">
+												   <form id="act_search" >
+                                                        <input type="image" src="images/renew.png" alt="edit" width="30" height="30">
+                                                   </form>
+											    </div>
+												<select id="name" style="padding-bottom:10px;" multiple required>
 												    
 												</select>
-												
 											</div>
+											
+											
 											<div class="col-sm-8 mt">
-                                                <button type="submit" class="btn btn-primary" id="newProv">Αποθήκευση</button>
+                                                <label for="description"><b>Περιγραφή*</b></label>
+                                                <textarea rows="3" class="form-control" id="description" required></textarea>
+											</div>
+											<div class="col-sm-5 col-md-5">
+												<section>
+													<label for="cat">Κατηγορία*:</label>
+													<br>
+													<select id="cat" style="padding-bottom:10px;">
+														<option value="" disabled selected>επιλέξτε..</option>
+														<option value="dance">χορός</option>
+                                                        <option value="gym">γυμναστήριο</option>
+                                                        <option value="personal trainer">personal trainer</option>
+			                                            <option value="martial arts">πολεμικές τέχνες</option>
+			                                            <option value="paintball">paintball</option>
+			                                            <option value="rafting">rafting</option>
+			                                            <option value="climbing">Αναρρίχηση</option>
+			                                            <option value="yoga">yoga</option>
+			                                            <option value="riding">Ιππασία</option>
+                                                        <option value="other">άλλο</option>
+													</select>
+												</section>
+											</div>
+											<div class="col-sm-10 col-md-10">
+                                                
+												<div class="col-sm-4 col-md-4">
+												   <label for="prov_name"><b>Πάροχος* </b></label>
+												</div>
+												<div class="col-sm-8 col-md-8">
+											       <form id="prov_search" >
+                                                        <input type="image" src="images/renew.png" alt="edit" width="30" height="30">
+                                                   </form>
+											    </div>
+												
+												<select id="prov_name" style="padding-bottom:10px;" multiple required>
+												    
+												</select>
+											</div>
+											
+								
+											<div class="col-sm-5 col-md-5">
+                                                <label for="price"><b>Τιμή* </b></label>
+                                                <input type="text" placeholder="προσθέστε τιμή.." class="form-control" id="price" required>
+											</div>
+											<div class="col-sm-5 mt">
+                                                <label for="tags_act"><b>Tags</b></label>
+                                                <select id="tags_act" style="padding-bottom:10px;" multiple >
+												    
+												</select>
+											</div>
+											
+											<div class="col-sm-5 col-md-5 col-xs-6">
+                                                <label for="dateFroma"><b>Αρχική ημερομηνία* </b></label>
+                                                <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateFroma" style="margin-bottom:15px" required>
+											</div>
+											<div class="col-sm-5 col-md-5 col-xs-6">
+                                                <label for="dateToa"><b>Τελική ημερομηνία* </b></label>
+                                                <input type="date" placeholder="xx-xx-xx" class="form-control" id="dateToa" style="margin-bottom:15px" required>
+											</div>
+											
+											
+											<div class="col-sm-5 col-md-5">
+                                                <button type="submit" class="btn btn-primary" id="newActivity">Αποθήκευση</button>
 											</div>
 										</form>	
 										</div>
@@ -134,7 +178,7 @@
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
 						<h3>Σχετικά με:</h3>
-						<p>Crowdsporting είναι μια crowdsourcing εφαρμογή με σκοπό να κάνει πανεύκολη την εύρεση των καλύτερων προσφορών για οποιαδήποτε αθλητική δραστηριότητα κοντά σας. Βασιζόμαστε σε εσάς να μοιραστείτε με τους υπόλοιπους χρήστες τις αγαπημένες σας τοποθεσίες και δραστηριότητες !</p>
+						<p>Το Crowdsporting είναι μια crowdsourcing εφαρμογή με σκοπό να κάνει πανεύκολη την εύρεση των καλύτερων προσφορών για οποιαδήποτε αθλητική δραστηριότητα κοντά σας. Βασιζόμαστε σε εσάς να μοιραστείτε με τους υπόλοιπους χρήστες τις αγαπημένες σας τοποθεσίες και δραστηριότητες !</p>
 					</div>
 				</div>
 			</div>
@@ -149,8 +193,6 @@
 							<h3>Επικοινωνήστε μαζί μας:</h3>
 							<p>Σχολή Ηλεκτρολόγων Μηχανικών και Μηχανικών Υπολογιστών, Εθνικό Μετσόβιο Πολυτεχνείο <br> Ζωγράφου 157 73 <br> contact@crowdsporting.gr</p>
 						</div>
-			
-						
 					
 						<div class="row">
 						<div class="col-md-6 col-md-offset-3 text-center">
@@ -192,22 +234,30 @@
 	<script src="js/magnific-popup-options.js"></script>
 	<!-- Date Picker -->
 	<script src="js/bootstrap-datepicker.min.js"></script>
-
+	<!-- CS Select -->
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
-	<!--slim select-->
+	
 	<!--slim select-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>
-
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&sensor=false"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0&callback=initMap"></script>
-	<script src="js/google_map_prov.js"></script>
+	<!--newPrice-->
+	<script src="js/new_price.js"></script>
 	<!--fetch-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js.map"></script>
 
 	</body>
-</html>  
+</html>
+
+
+
+      
+   
+      
+      
+ 

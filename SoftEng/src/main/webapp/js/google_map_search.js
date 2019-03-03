@@ -165,10 +165,13 @@ function validateForm() {
 			if((start!="" && end=="") ||  (start=="" && end!="")) {
 				alert("Please fill both start and finish dates!");
 				return false; }
-			if(clicked==true && maxdist =="") {
+			else if(clicked==true && maxdist =="") {
 				alert("Please fill out max distance from position!"); 
 				return false; }
-			searchIT();
+			else {
+				searchIT();
+				return true;
+			}
 }
 
 
