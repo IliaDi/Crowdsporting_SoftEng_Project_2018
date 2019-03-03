@@ -58,7 +58,7 @@
 								<ul class="fh5co-sub-menu">
 									<li><a href="new_provider.html">πάροχος</a></li>
 									<li><a href="new_product.html">προϊόν</a></li>
-									<li><a href="new_activity.html">δραστηριότητα</a></li>
+									<li><a href="new_price.html">τιμή</a></li>
 								</ul>
 							</li>
 							<li><a href="#fh5co-about">Σχετικά με</a></li>
@@ -94,7 +94,7 @@
 												<section>
 													<label for="cat">Κατηγορία*:</label>
 													<br>
-													<select id="cat">
+													<select id="cat" required>
 														<option value="" disabled selected>επιλέξτε..</option>
 														<option value="dance">χορός</option>
                                                         <option value="gym">γυμναστήριο</option>
@@ -109,14 +109,15 @@
 													</select>
 												</section>
 											</div>
-											<div class="col-sm-5 mt">
-                                                <label for="tags_act"><b>Tags</b></label>
-                                                <select id="tags_act" multiple >
+											<div class="col-sm-6 col-xs-6" style="margin-bottom:20px;">
+                                                <label for="tags_prod"><b>Tags</b></label>
+                                                <select id="tags_prod" multiple >
 												    
 												</select>
+												
 											</div>
 											<div class="col-sm-5 col-md-5">
-                                                <button type="submit" class="btn btn-primary" id="newActivity">Αποθήκευση</button>
+                                                <button type="submit" class="btn btn-primary" id="newProduct">Αποθήκευση</button>
 											</div>
 										</form>	
 										</div>
