@@ -11,16 +11,41 @@ var tags_product = new SlimSelect({
   }
 });
 
+var category_prod = new SlimSelect({
+  select: '#cat' ,
+
+
+});
+
 function createProd() { 
-	//alert("bob");
 	var name = document.getElementById("name").value;
-	var address = document.getElementById("description").value;
+	var description = document.getElementById("description").value;
 	var tags = tags_product.selected();
 
 
 	var alltags = "";
 	  tags.forEach(function(tag){
 	    alltags = alltags + "&tags=" + tag;
+	  });
+	  
+	fetch('/observatory/api/shops', {
+	    method: 'POST',
+	    headers: {
+            "Content-Type": "application/json",
+            // "Content-Type": "application/x-www-form-urlencoded",
+        },
+	    body: "name=" +name +"&description=" + description + alltags
+	  })
+	  .then(function(response) {
+	    if(response.status==200) return response.json();
+	    throw new Error("HTTP error, status = " + response.status);
+	  })
+	  .then(function(product) {
+	    console.log('all good ');
+		alert('Επιτυχής καταχώρηση προϊόντος');
+	  })
+	  .catch(function (error) {
+	   	alert(error) ;
 	  });
 
 }
@@ -29,7 +54,7 @@ function validateProdForm() {
 			var nameentry=document.getElementById("name").value;
 			var descrentry=document.getElementById("description").value;
 			var catentry=document.getElementById("cat").value;
-			if(nameentry=="" || descrentry=="" || catentry==null) {
+			if(nameentry=="" || descrentry=="" || catentry=="") {
 				alert("Please fill all required fields!");
 				return false; }
 			else { 
