@@ -794,5 +794,17 @@ public class DataAccess {
       return token;
 
     }
+    
+    public Optional<User> getUser(String  username) {
+        String[] params = new String[]{username};
+        List<User> users = jdbcTemplate.query("select * from user where fullname = ?", params, new UserRowMapper());
+        if (users.size() == 1)  {
+            User u = users.get(0);
+            return Optional.of(u);
+        }
+        else {
+            return Optional.empty();
+        }
+    }
 
 }
