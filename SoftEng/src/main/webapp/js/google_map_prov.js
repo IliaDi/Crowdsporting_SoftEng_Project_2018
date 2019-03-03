@@ -90,6 +90,7 @@ function createProv() {
 	  })
 	  .then(function(product) {
 	    console.log('all good ');
+		alert('Επιτυχής καταχώρηση προϊόντος');
 	  })
 	  .catch(function (error) {
 	   	alert(error) ;

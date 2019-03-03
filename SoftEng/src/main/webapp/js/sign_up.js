@@ -10,7 +10,7 @@ function createAcc() {
             "Content-Type": "application/json",
             // "Content-Type": "application/x-www-form-urlencoded",
         },
-    body: "fullname=" +fname +"password=" + pword + "email=" + email
+    body: "fullname=" +fname +"&password=" + pword + "&email=" + email
 	})
 	.then(function(response) {
 	    if(response.status==200) return response.json();
