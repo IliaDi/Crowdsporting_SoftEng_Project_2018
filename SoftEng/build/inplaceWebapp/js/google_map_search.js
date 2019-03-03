@@ -53,14 +53,14 @@ dateFrom = document.getElementById("dateFrom").value;
 dateTo = document.getElementById("dateTo").value;
 geoDist = document.getElementById("geoDist").value;
 
-
+/*
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	infoWindow.setPosition(pos);
 	infoWindow.setContent(browserHasGeolocation ?
 		'Error: The Geolocation service failed.' :
 		'Error: Your browser doesn\'t support geolocation.');
 	infoWindow.open(map);
-}
+}*/
 
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map_search'), {
@@ -92,7 +92,7 @@ function initMap() {
 	});
 
 
-	// Try HTML5 geolocation.
+	/*// Try HTML5 geolocation.
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function (position) {
 			var pos = {
@@ -110,11 +110,33 @@ function initMap() {
 		// Browser doesn't support Geolocation
 		handleLocationError(false, infoWindow, map.getCenter());
 	}
-
+*/
 }
 
-function searchIT() { window.location.href="#map"; 
-alert('tags\n'+tags_search.selected()+'shops\n'+provider.selected()+'products\n'+ activities.selected()+'dateFrom\n'+document.getElementById("dateFrom").value+'DateTo\n'+document.getElementById("dateTo").value + 'lat\n' + coord.lat() +'lng\n' + coord.lng() ); }
+function searchIT() { 
+//window.location.href="#map"; //εδώ πρέπει να γίνει GET με τις παραπάνω παραμέτρους , μετά το αποτέλεσμα να μορφοποιηθεί στη λίστα , και στο τέλος επειδή κάθε στοιχείο της λίστας έχει και ένα edit κουμπί , να καλείται μια PATCH (γραμμένη σε αυτό το αρχείο) η οποία να παίρνει το id αυτού του list item
+//alert('tags\n'+tags_search.selected()+'shops\n'+provider.selected()+'products\n'+ activities.selected()+'dateFrom\n'+document.getElementById("dateFrom").value+'DateTo\n'+document.getElementById("dateTo").value + 'lat\n' + coord.lat() +'lng\n' + coord.lng() ); 
+
+fetch('/observatory/api/shops', {method: 'GET'})
+    .then(function(response) {
+      if(response.ok) return response.json();
+      throw new Error("HTTP error, status = " + response.status);
+    })
+    .then(function(json) {
+      let results = json.shops;
+      var bob =  results[0].name;
+   	  alert(bob);
+    })
+    .catch(function(error) {
+      var p = document.createElement('p');
+      p.appendChild(
+        document.createTextNode('Error: ' + error.message)
+      );
+      document.body.insertBefore(p, myList);
+    });
+
+   
+}
 
 
 

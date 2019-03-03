@@ -77,7 +77,7 @@ function createProv() {
 	fetch('/observatory/api/shops', {
 	    method: 'POST',
 
-	    body: "name=" +name +"&address=" + address +"&lng=3&lat=5"/* + coord.lng() + "&lat=" + coord.lat() */+ alltags
+	    body: "name=" +name +"&address=" + address +"&lng=" + coord.lng() + "&lat=" + coord.lat() + alltags
 	  })
 	  .then(function(response) {
 	    if(response.ok) return response.json();
