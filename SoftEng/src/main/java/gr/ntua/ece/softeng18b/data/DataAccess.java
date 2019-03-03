@@ -56,6 +56,7 @@ public class DataAccess {
         tm = new DataSourceTransactionManager(bds);
     }
 
+    //returns all the products in the database
     public List<Product> getProducts(Limits limits, String column, String order, Integer withdrawn) {
 
         String withdrawnQuery = "";
@@ -142,6 +143,21 @@ public class DataAccess {
         else {
             return Optional.empty();
         }
+    }
+
+    //get all the products with this name
+    public List<Product> getProductsName(String name) {
+        String[] params = new String[]{name};
+        List<Product> products = jdbcTemplate.query("select * from product where name = ?", params, new ProductRowMapper());
+        if (products.isEmpty()) {
+            return products;
+        }
+        else {
+            for(Product p: products) {
+                fetchTagsOfProduct(p);
+            }
+        }
+        return products;   
     }
 
     protected void fetchTagsOfProduct(Product p) {
