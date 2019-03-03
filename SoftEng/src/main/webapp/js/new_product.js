@@ -19,13 +19,33 @@ var category_prod = new SlimSelect({
 
 function createProd() { 
 	var name = document.getElementById("name").value;
-	var address = document.getElementById("description").value;
+	var description = document.getElementById("description").value;
 	var tags = tags_product.selected();
 
 
 	var alltags = "";
 	  tags.forEach(function(tag){
 	    alltags = alltags + "&tags=" + tag;
+	  });
+	  
+	fetch('/observatory/api/shops', {
+	    method: 'POST',
+	    headers: {
+            "Content-Type": "application/json",
+            // "Content-Type": "application/x-www-form-urlencoded",
+        },
+	    body: "name=" +name +"&description=" + description + alltags
+	  })
+	  .then(function(response) {
+	    if(response.status==200) return response.json();
+	    throw new Error("HTTP error, status = " + response.status);
+	  })
+	  .then(function(product) {
+	    console.log('all good ');
+		alert('Επιτυχής καταχώρηση προϊόντος');
+	  })
+	  .catch(function (error) {
+	   	alert(error) ;
 	  });
 
 }
