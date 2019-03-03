@@ -137,7 +137,7 @@ function searchIT() {
 window.location.href="#map"; 
 let tags= tags_search.selected(); 
 let shops = provider.selected(); 
-let activities =activities.selected(); 
+let activities = activities.selected(); 
 let dateFrom = document.getElementById("dateFrom").value;
 let dateTo = document.getElementById("dateTo").value; 
 let myLat = coord.lat();

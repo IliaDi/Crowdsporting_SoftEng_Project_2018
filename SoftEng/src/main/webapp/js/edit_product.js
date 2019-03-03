@@ -1,4 +1,6 @@
-document.getElementById("newProduct").addEventListener("click", validateProdForm);
+document.getElementById("sear").addEventListener("click", showProd);
+document.getElementById("smh").addEventListener("click", editProd);
+document.getElementById("newProduct").addEventListener("click", putProd);
 var tags_product = new SlimSelect({
   select: '#tags_prod' ,
 
@@ -17,49 +19,69 @@ var category_prod = new SlimSelect({
 
 });
 
-function createProd() { 
+var prod = new SlimSelect({
+  select: '#prod' ,
+}); 
+let bob = document.getElementById('prod');
+bob.length = 0;
+bob.add(defaultOption);
+bob.selectedIndex = 0;
+
+function showProd() { 
 	var name = document.getElementById("name").value;
 	var description = document.getElementById("description").value;
 	var tags = tags_product.selected();
 	var category = category_prod.selected();
-
-
-	var alltags = "";
-	  tags.forEach(function(tag){
-	    alltags = alltags + "&tags=" + tag;
-	  });
-	  
-	fetch('/observatory/api/products', {
-	    method: 'POST',
-	    headers: {
-            "Content-Type": "application/json",
-            // "Content-Type": "application/x-www-form-urlencoded",
-        },
-	    body: "name=" +name +"&description=" + description +"&category="+category + alltags
-	  })
-	  .then(function(response) {
-	    if(response.status==200) return response.json();
-	    throw new Error("HTTP error, status = " + response.status);
-	  })
-	  .then(function(product) {
-	    console.log('all good ');
-		alert('Επιτυχής καταχώρηση προϊόντος');
-	  })
-	  .catch(function (error) {
-	   	alert(error) ;
-	  });
-
+	
+	function getproducts(){
+  fetch('/observatory/api/products', {method: 'GET'})
+  .then(function(response) {
+    if(response.ok) return response.json();
+    throw new Error("HTTP error, status = " + response.status);
+  })
+  .then(function(json) {
+    let results = json.products;
+    let option;
+      
+    for (let i = 0; i < results.length; i++) {
+        option = document.createElement('option');
+        option.text = results[i].name;
+        option.value = results[i].name;
+        bob.add(option);
+    } 
+  })
+  .catch(function(error) {
+    console.error('Fetch Error -', error);
+  });
+}
+	
 }
 
-function validateProdForm() {	
-			var nameentry=document.getElementById("name").value;
-			var descrentry=document.getElementById("description").value;
-			var catentry=document.getElementById("cat").value;
-			if(nameentry=="" || descrentry=="" || catentry=="") {
-				alert("Please fill all required fields!");
-				return false; }
-			else { 
-				createProd();
-				return true;
-			}
+function editProd() {
+  var nameofproduct=bob.selected();
+  var uri = '/observatory/api/productname/' + nameofproduct;
+
+  fetch(uri, {method: 'GET'})
+  .then(function(response) {
+    if(response.ok) return response.json();
+    throw new Error("HTTP error, status = " + response.status);
+  })
+  .then(function(json) {
+    let results = json.products;
+    document.getElementById('name').value = results[0].name;
+	document.getElementById('description').value = results[0].description;
+	category_prod.set(results[0].category);
+	tags_prod.set(results[0].tags);
+  })
+  .catch(function(error) {
+    console.error('Fetch Error -', error);
+  });
 }
+
+function putProd() {
+	let newName = document.getElementById('name').value;
+	let newDescription = document.getElementById('description').value;
+	let newCat = category_prod.selected();
+	let newProds = tags_prod.selected();
+}
+
