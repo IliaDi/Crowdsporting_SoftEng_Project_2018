@@ -163,10 +163,37 @@
 												</div>
 											</div>
 											
+											<div class="col-xxs-12 col-xs-12 col-md-12 mt"> 
+											    <h5><b>Ταξινόμηση Αποτελεσμάτων</b></h5>
+												<div class="col-xxs-4 col-xs-4 col-md-4 mt" >
+												    <label for="sort_price">Τιμή</label>
+												    <select id="sort_price">
+													   <option value="asc">Άυξουσα</option>
+													   <option value="desc">Φθίνουσα</option>
+												    </select>
+												</div>
+												<div class="col-xxs-4 col-xs-4 col-md-4 mt">
+												    <label for="sort_dist">Απόσταση </label>
+												    <select id="sort_dist">
+													   <option  disabled selected value> - </option>
+													   <option value="asc">Άυξουσα</option>
+													   <option value="desc">Φθίνουσα</option>
+												    </select>
+												</div>
+												<div class="col-xxs-4 col-xs-4 col-md-4 mt" >
+												    <label for="sort_date">Αρχική Ημερομηνία</label>
+												    <select id="sort_date">
+													   <option  disabled selected value> - </option>
+													   <option value="desc">Νεότερες πρώτα</option>
+													   <option value="asc">Παλαιότερες πρώτα</option>
+												    </select>
+												</div>
+											</div>
+											
 											
 							
 											<div class="col-xs-12">
-												<input type="submit" id="sear_btn" class="btn btn-primary btn-block" value="Search for Activities" onclick="validateForm()">
+												<input type="submit" id="sear_btn" class="btn btn-primary btn-block" value="Search for Activities">
 											</div>
 										</div>
 									 </div>
@@ -184,18 +211,6 @@
 			<div class="container">
 				<div class="row" id="search_res">
 					<div class="col-sm-12 col-md-9 col-xs-12 col-xxs-12" id="map">
-					</div>
-					<div class="col-sm-5 col-md-5 col-xs-5">
-						<section>
-							<label for="sorting">Ταξινόμηση:</label>
-							<br>
-							<select class="cs-select cs-skin-border" id="sorting">
-								<option value="asc_price" >Τιμή αύξουσα</option>
-								<option value="dist">Μικρότερη απόσταση</option>
-                                <option value="dsc_price">Τιμή φθίνουσα</option>
-                                <option value="n_likes">Αριθμός likes</option> 
-							</select>
-						</section>
 					</div>
 					<ul class="col-sm-12 col-md-12 col-xs-12 col-xxs-12"id="activity_res">
                         <li class="activity_item">
@@ -296,24 +311,7 @@
 	
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
-	<script>
-		function validateForm() {	
-			var start=document.getElementById("dateFrom").value;
-			var end=document.getElementById("dateTo").value;
-			if((start!="" && end=="") ||  (start=="" && end!="")) {
-				alert("Please fill both start and finish dates!");
-				return false; }
-			else return true;
-			//var fields = [document.getElementById(dateFrom), document.getElementById(dateTo)]
-			//var i, l = fields.length;
-			//var fieldname;
-			//for (i = 0; i < l; i++) {
-			//fieldname = fields[i];
-			//if (document.forms["register"][fieldname].value === "") {
-				//alert(fieldname + " can not be empty");
-				//return false;
-	}	
-	</script>  
+	
 	<!--slim select-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>

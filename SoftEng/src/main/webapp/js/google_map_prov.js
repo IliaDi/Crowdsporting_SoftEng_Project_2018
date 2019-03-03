@@ -65,6 +65,7 @@ var tags_provider = new SlimSelect({
 };*/
 
 function createProv() { 
+	//alert("bob");
 	var name = document.getElementById("name").value;
 	var address = document.getElementById("street").value;
 	var tags = tags_provider.selected();
@@ -77,21 +78,24 @@ function createProv() {
 
 	fetch('/observatory/api/shops', {
 	    method: 'POST',
-
+	    headers: {
+            "Content-Type": "application/json",
+            // "Content-Type": "application/x-www-form-urlencoded",
+        },
 	    body: "name=" +name +"&address=" + address +"&lng=" + coord.lng() + "&lat=" + coord.lat() + alltags
 	  })
 	  .then(function(response) {
-	    if(response.ok) return response.json();
+	    if(response.status==200) return response.json();
 	    throw new Error("HTTP error, status = " + response.status);
 	  })
 	  .then(function(product) {
 	    console.log('all good ');
 	  })
 	  .catch(function (error) {
-	    console.log('Request failure: ', error);
+	   	alert(error) ;
 	  });
 
-	//alert("Hello! I am an alert box!!"+alltags + address); 
+	//alert("Hello! I am an alert box!!"+alltags + address); */
 }
 
 function validateProvForm() {	

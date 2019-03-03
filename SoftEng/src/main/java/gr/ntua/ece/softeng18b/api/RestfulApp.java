@@ -20,8 +20,14 @@ public class RestfulApp extends Application {
         //GET, DELETE
         router.attach("/products/{id}", ProductResource.class);
 
+        //GET
+        router.attach("/productsname/{name}", ProductsNameResource.class);
+
         //GET, DELETE
         router.attach("/shops/{id}", ShopResource.class);
+
+        //GET
+        router.attach("/shopname/{name}", ShopNameResource.class);
 
         router.attach("/login", LoginResource.class);
 

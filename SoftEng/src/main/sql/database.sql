@@ -17,7 +17,6 @@ USE `softeng2018b`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
 --
 -- Table structure for table `shop`
 --
@@ -46,7 +45,6 @@ INSERT INTO `shop` VALUES (1,'Ρομποτάκης','Οδός 13, 12345, Ζωγ�
 /*!40000 ALTER TABLE `shop` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
 --
 -- Table structure for table `shop_tags`
 --
@@ -55,10 +53,10 @@ DROP TABLE IF EXISTS `shop_tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shop_tags` (
-  `pid` int(11) NOT NULL DEFAULT '0',
+  `sid` int(11) NOT NULL DEFAULT '0',
   `tag` varchar(255) NOT NULL,
-  PRIMARY KEY (`pid`,`tag`),
-  CONSTRAINT `fk_shop` FOREIGN KEY (`pid`) REFERENCES `shop` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`sid`,`tag`),
+  CONSTRAINT `fk_shop` FOREIGN KEY (`sid`) REFERENCES `shop` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -72,10 +70,6 @@ LOCK TABLES `shop_tags` WRITE;
 INSERT INTO `shop_tags` VALUES (1,'computing'),(1,'laptops');
 /*!40000 ALTER TABLE `shop_tags` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-
-
 
 --
 -- Table structure for table `product`
@@ -129,11 +123,8 @@ INSERT INTO `product_tags` VALUES (1,'tag1'),(1,'tag2'),(2,'tag3'),(2,'tag4'),(2
 /*!40000 ALTER TABLE `product_tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-
-
 --
--- Table structure for table `prices`
+-- Table structure for table `prices`	
 --
 
 DROP TABLE IF EXISTS `prices`;
@@ -149,11 +140,6 @@ CREATE TABLE `prices` (
   CONSTRAINT `fk_price_shop` FOREIGN KEY (`sid`) REFERENCES `shop` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-
-
-
-
 
 --
 -- Table structure for table `user`
