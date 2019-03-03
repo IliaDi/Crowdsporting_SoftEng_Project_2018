@@ -28,6 +28,40 @@ var category_act = new SlimSelect({
   }
 });
 
+var shop = new SlimSelect({
+  select: '#prov_name' ,
+  showSearch: true,
+  searchText: 'Δεν βρέθηκε,δημιουργήστε νέο πάροχο',
+  searchPlaceholder: 'Αναζητήστε καταχωρημένους παρόχους',
+  searchHighlight: true
+
+});
+let dropdown = document.getElementById('prov_name');
+dropdown.length = 0;
+
+dropdown.add(defaultOption);
+dropdown.selectedIndex = 0;
+
+fetch('/observatory/api/shops', {method: 'GET'})
+    .then(function(response) {
+      if(response.ok) return response.json();
+      throw new Error("HTTP error, status = " + response.status);
+    })
+    .then(function(json) {
+      let results = json.shops;
+   	  let option;
+    
+    	for (let i = 0; i < json.length; i++) {
+          option = document.createElement('option');
+      	  option.text = results[i].name;
+      	  option.value = results[i].name;
+      	  dropdown.add(option);
+    	} 
+    })
+    .catch(function(error) {
+      console.error('Fetch Error -', error);
+    });
+
 
 function createAct(){
   var name = document.getElementById("name").value;
