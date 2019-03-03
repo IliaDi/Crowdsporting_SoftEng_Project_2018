@@ -1,12 +1,13 @@
 var map,infoWindow, google, marker;
 var tags, shops, products , geoLat, geoLng, dateTo, dateFrom;
 var coord, geoDist ;
+var clicked = false;
 /*
 var category = new SlimSelect({
   select: '#cat_multiple' ,
 
 });*/
-document.getElementById("sear_btn").addEventListener("click", searchIT);
+document.getElementById("sear_btn").addEventListener("click", validateForm);
 
 var tags_search = new SlimSelect({
   select: '#tags_multiple' ,
@@ -44,6 +45,24 @@ var activities = new SlimSelect({
     return value // Optional - value alteration // ex: value.toLowerCase()
 
   }
+});
+
+var sprice = new SlimSelect({
+  select: '#sort_price' ,
+  showSearch: false
+
+});
+
+var sdist = new SlimSelect({
+  select: '#sort_dist' ,
+  showSearch: false
+
+});
+
+var sdate = new SlimSelect({
+  select: '#sort_date' ,
+  showSearch: false
+
 });
 
 tags = tags_search.selected(); // Will return a string or an array of string values
@@ -88,6 +107,7 @@ function initMap() {
 	google.maps.event.addListener(map, 'click', function (event) {
 		coord = event.latLng;
 		placeMarker(coord);
+		clicked = true;
 
 	});
 
@@ -136,6 +156,19 @@ fetch('/observatory/api/shops', {method: 'GET'})
     });
 
    
+}
+
+function validateForm() {	
+			var start=document.getElementById("dateFrom").value;
+			var end=document.getElementById("dateTo").value;
+			var maxdist = document.getElementById("geoDist").value;
+			if((start!="" && end=="") ||  (start=="" && end!="")) {
+				alert("Please fill both start and finish dates!");
+				return false; }
+			if(clicked==true && maxdist =="") {
+				alert("Please fill out max distance from position!"); 
+				return false; }
+			searchIT();
 }
 
 
