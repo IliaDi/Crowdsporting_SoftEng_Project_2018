@@ -31,7 +31,7 @@ public class LoginResource extends ServerResource {
         String username = form.getFirstValue("username");
         String password = form.getFirstValue("password");
 
-        Optional<User> optional = dataAccess.getUser(username);
+        Optional<User> optional = dataAccess.getUserName(username);
         User user = optional.orElseThrow(() -> new ResourceException(Status.CLIENT_ERROR_NOT_FOUND, "User: " + username + " not found"));
 
         if (!user.getPassword().equals(password))
