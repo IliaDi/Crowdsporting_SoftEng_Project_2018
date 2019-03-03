@@ -1,8 +1,6 @@
 
 document.getElementById("prov_search").addEventListener("click", getshops);
-document.getElementById("act_search").addEventListener("click", getproducts);
 document.getElementById("newActivity").addEventListener("click", createAct);
-
 
 
 var tags_activity = new SlimSelect({
@@ -71,7 +69,7 @@ function getproducts(){
   })
   .then(function(json) {
     let results = json.products;
-    //let option;
+    let option;
       
     for (let i = 0; i < results.length; i++) {
         option = document.createElement('option');
@@ -93,7 +91,7 @@ function getshops(){
   })
   .then(function(json) {
     let results = json.shops;
-    //let option;
+    let option;
       
     for (let i = 0; i < results.length; i++) {
         option = document.createElement('option');

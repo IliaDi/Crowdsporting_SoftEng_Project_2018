@@ -84,13 +84,15 @@
 	                                        <div class="col-sm-10 col-md-10">
 											    <h3> Νέα καταχώρηση </h3>
                                                 
-												<div class="col-sm-12 col-md-12">
-												   <label for="name"><b>Όνομα*</b></label>
+												<div class="col-sm-4 col-md-4">
+												   <label for="name"><b>Όνομα δραστηριότητας*</b></label>
+												</div>
+												<div class="col-sm-8 col-md-8">
 												   <form id="act_search" >
                                                         <input type="image" src="images/renew.png" alt="edit" width="30" height="30">
                                                    </form>
 											    </div>
-												<select id="name" multiple required>
+												<select id="name" style="padding-bottom:10px;" multiple required>
 												    
 												</select>
 											</div>
@@ -104,7 +106,7 @@
 												<section>
 													<label for="cat">Κατηγορία*:</label>
 													<br>
-													<select id="cat">
+													<select id="cat" style="padding-bottom:10px;">
 														<option value="" disabled selected>επιλέξτε..</option>
 														<option value="dance">χορός</option>
                                                         <option value="gym">γυμναστήριο</option>
@@ -121,13 +123,16 @@
 											</div>
 											<div class="col-sm-10 col-md-10">
                                                 
-												<div class="col-sm-12 col-md-12">
+												<div class="col-sm-4 col-md-4">
 												   <label for="prov_name"><b>Πάροχος* </b></label>
+												</div>
+												<div class="col-sm-8 col-md-8">
 											       <form id="prov_search" >
                                                         <input type="image" src="images/renew.png" alt="edit" width="30" height="30">
                                                    </form>
 											    </div>
-												<select id="prov_name" multiple required>
+												
+												<select id="prov_name" style="padding-bottom:10px;" multiple required>
 												    
 												</select>
 											</div>
@@ -139,7 +144,7 @@
 											</div>
 											<div class="col-sm-5 mt">
                                                 <label for="tags_act"><b>Tags</b></label>
-                                                <select id="tags_act" multiple >
+                                                <select id="tags_act" style="padding-bottom:10px;" multiple >
 												    
 												</select>
 											</div>
@@ -239,8 +244,8 @@
 	<!--slim select-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.js"></script>
-	<!--newActivity-->
-	<script src="js/new_activity.js"></script>
+	<!--newPrice-->
+	<script src="js/new_price.js"></script>
 	<!--fetch-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>
