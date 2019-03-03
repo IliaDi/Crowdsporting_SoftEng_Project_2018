@@ -74,7 +74,7 @@ function createProv() {
 	  tags.forEach(function(tag){
 	    alltags = alltags + "&tags=" + tag;
 	  });
-	  
+
 	fetch('/observatory/api/shops', {
 	    method: 'POST',
 	    headers: {
