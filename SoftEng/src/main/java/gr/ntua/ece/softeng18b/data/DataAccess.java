@@ -332,18 +332,18 @@ public class DataAccess {
     }
 
     //get shop by its name
-    public Optional<Shop> getShopName(String name) {
-        String[] params = new String[]{name};
-        List<Shop> shops = jdbcTemplate.query("select * from shop where name = ?", params, new ShopRowMapper());
-        if (shops.size() == 1)  {
-            Shop s = shops.get(0);
-            fetchTagsOfShop(s);
-            return Optional.of(s);
-        }
-        else {
-            return Optional.empty();
-        }
+    public List<Shop> getShopsName(String[] shops) {
+        Helper helper = new Helper();
+        List<Shop> shopsInfo = jdbcTemplate.query((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                "select * from shop where  " + helper.parseAtStart("name", shops.length)
+            );
+            helper.bindStringArray(ps, 0, shops);
+            return ps;
+        }, new ShopRowMapper());
+        return shopsInfo;
     }
+
 
     public Optional<Shop> getShop(long id) {
         Long[] params = new Long[]{id};
