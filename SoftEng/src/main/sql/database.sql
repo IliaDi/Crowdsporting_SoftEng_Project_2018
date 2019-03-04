@@ -36,16 +36,6 @@ CREATE TABLE `shop` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `shop`
---
-
-LOCK TABLES `shop` WRITE;
-/*!40000 ALTER TABLE `shop` DISABLE KEYS */;
-INSERT INTO `shop` VALUES (1,'Ρομποτάκης','Οδός 13, 12345, Ζωγράφου','32.12345345','33.02312412', '\0');
-/*!40000 ALTER TABLE `shop` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `shop_tags`
 --
 
@@ -59,17 +49,6 @@ CREATE TABLE `shop_tags` (
   CONSTRAINT `fk_shop` FOREIGN KEY (`sid`) REFERENCES `shop` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-
---
--- Dumping data for table `shop_tags`
---
-
-LOCK TABLES `shop_tags` WRITE;
-/*!40000 ALTER TABLE `shop_tags` DISABLE KEYS */;
-INSERT INTO `shop_tags` VALUES (1,'computing'),(1,'laptops');
-/*!40000 ALTER TABLE `shop_tags` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `product`
@@ -89,16 +68,6 @@ CREATE TABLE `product` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `product`
---
-
-LOCK TABLES `product` WRITE;
-/*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Vendor TV 32\'\' Model X','Mplah mplah','TV','\0'),(2,'OtherVendor TV 42\'\' Model Y','Mplah Mplah','TV','\0');
-/*!40000 ALTER TABLE `product` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `product_tags`
 --
 
@@ -112,16 +81,6 @@ CREATE TABLE `product_tags` (
   CONSTRAINT `fk_prod` FOREIGN KEY (`pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `product_tags`
---
-
-LOCK TABLES `product_tags` WRITE;
-/*!40000 ALTER TABLE `product_tags` DISABLE KEYS */;
-INSERT INTO `product_tags` VALUES (1,'tag1'),(1,'tag2'),(2,'tag3'),(2,'tag4'),(2,'tag5');
-/*!40000 ALTER TABLE `product_tags` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `prices`	
@@ -157,17 +116,6 @@ CREATE TABLE `user` (
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
 
 --
 -- Table structure for table `token`
