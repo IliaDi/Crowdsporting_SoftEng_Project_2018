@@ -13,24 +13,6 @@
         <param-name>properties</param-name>
         <param-value>/gr/ntua/ece/softeng18b/app.properties</param-value>
     </context-param>
-	
-    <!-- //////// -->
-    <!-- Filters -->
-    <!-- //////// -->
-	
-	
-    <filter>
-    	<filter-name>AuthenticationFilter</filter-name>
-    	<filter-class>gr.ntua.ece.softeng18b.AuthenticationFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-    	<filter-name>AuthenticationFilter</filter-name>
-    	<url-pattern>/observatory/api/products</url-pattern>
-	<url-pattern>/observatory/api/shops</url-pattern>
-	<url-pattern>/observatory/api/prices</url-pattern>
-	<url-pattern>/observatory/api/logout</url-pattern>
-    </filter-mapping>
 
     <!-- //////// -->
     <!-- Servlets -->
