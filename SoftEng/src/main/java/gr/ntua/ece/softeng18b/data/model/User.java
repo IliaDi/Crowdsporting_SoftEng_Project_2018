@@ -5,24 +5,18 @@ import java.util.Objects;
 
 public class User {
 
-    private final long id;
-    private final String fullname;
+    private final String username;
     private final String password;
     private final String mail;
 
-    public User(long id, String fullname, String password, String mail) {
-        this.id = id;
-        this.fullname = fullname;
+    public User(String username, String password, String mail) {
+        this.username = username;
         this.password = password;
         this.mail = mail;
     }
 
-    public long getId() {
-        return id;
-    }
-
     public String getUsername() {
-        return fullname;
+        return username;
     }
 
     public String getPassword() {
@@ -38,12 +32,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id;
+        return username == user.username;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(username);
     }
 
 }
