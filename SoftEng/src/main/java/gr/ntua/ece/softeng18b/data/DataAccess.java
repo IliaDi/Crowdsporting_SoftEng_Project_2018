@@ -710,5 +710,101 @@ public class DataAccess {
       return Optional.of(user);
 
     }
+    
+        public Token saveToken(String token) {
+
+        TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        long id = transactionTemplate.execute((TransactionStatus status) -> {
+
+            //Create the new product record using a prepared statement
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            int rowCount = jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                    "insert into token(token) values(?)",
+                    Statement.RETURN_GENERATED_KEYS
+                );
+                ps.setString(1, token);
+                return ps;
+            }, keyHolder);
+
+            if (rowCount != 1) {
+                throw new RuntimeException("Token not created");
+            }
+
+            long newId = keyHolder.getKey().longValue();
+
+            return newId;
+        });
+
+        //New row has been added
+        Token accessToken = new Token(
+            id,
+            token
+        );
+
+        return accessToken;
+    }
+
+
+
+    public Optional<Token> findToken(String token) {
+        String[] params = new String[]{token};
+        List<Token> tokens = jdbcTemplate.query("select * from token where token = ?", params, new TokenRowMapper());
+        if (tokens.size() == 1)  {
+            Token t = tokens.get(0);
+            return Optional.of(t);
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+
+    public Optional<Token> deleteToken(String accessToken) {
+
+      TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+      transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+      //Find the product. Return if it does not exist.
+      Optional<Token> token = findToken(accessToken);
+
+      if (!token.isPresent())
+          return Optional.empty();
+
+      transactionTemplate.execute((TransactionStatus status) -> {
+
+          //Delete the product record using a prepared statement
+          int rowCount = jdbcTemplate.update((Connection con) -> {
+              PreparedStatement ps = con.prepareStatement(
+                  "delete from token where token = ?"
+              );
+              ps.setString(1, accessToken);
+              return ps;
+          });
+
+          if (rowCount != 1) {
+              throw new RuntimeException("Token not de-activated");
+          }
+
+          return 0;
+      });
+
+      return token;
+
+    }
+    
+    public Optional<User> getUserName(String  username) {
+        String[] params = new String[]{username};
+        List<User> users = jdbcTemplate.query("select * from user where fullname = ?", params, new UserRowMapper());
+        if (users.size() == 1)  {
+            User u = users.get(0);
+            return Optional.of(u);
+        }
+        else {
+            return Optional.empty();
+        }
+    }
 
 }

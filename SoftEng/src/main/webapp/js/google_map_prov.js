@@ -90,12 +90,13 @@ function createProv() {
 	  })
 	  .then(function(product) {
 	    console.log('all good ');
+		alert('Επιτυχής καταχώρηση ');
 	  })
 	  .catch(function (error) {
 	   	alert(error) ;
 	  });
 
-	//alert("Hello! I am an alert box!!"+alltags + address); */
+	//alert("Hello! I am an alert box!!"+alltags + address); 
 }
 
 function validateProvForm() {	

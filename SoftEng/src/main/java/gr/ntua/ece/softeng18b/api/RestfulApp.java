@@ -30,6 +30,7 @@ public class RestfulApp extends Application {
         router.attach("/shopsname", ShopsNameResource.class);
 
         router.attach("/login", LoginResource.class);
+        router.attach("/logout", LogoutResource.class);
 
         //POST
         router.attach("/signup", UserResource.class);

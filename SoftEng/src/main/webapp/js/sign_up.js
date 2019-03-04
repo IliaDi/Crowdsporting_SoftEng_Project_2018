@@ -18,7 +18,8 @@ function createAcc() {
 	  })
 	  .then(function(product) {
 	    console.log('all good ');
-		alert('Επιτυχής καταχώρηση προϊόντος');
+		alert('Επιτυχής εγγραφή');
+		//window.location.href = "../index.html";
 	  })
 	  .catch(function (error) {
 	   	alert(error) ;
