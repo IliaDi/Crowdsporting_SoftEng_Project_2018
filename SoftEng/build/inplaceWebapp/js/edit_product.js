@@ -96,16 +96,19 @@ function putProd() {
       alltags = alltags + "&tags=" + tag;
     });*/
   //alert(alltags);
+  var  tokenHeader = new Headers({
+    "X-OBSERVATORY-AUTH": "dc34ee33-486f-483a-b3a9-db552cb73974",
+    "Content-Type": "application/json",
+              // "Content-Type": "application/x-www-form-urlencoded",
+          
+  });
 
 
   var uri = '/observatory/api/products/' + myid;
   //alert(uri);
   fetch(uri, {
         method: 'PUT',
-        headers: {
-              "Content-Type": "application/json",
-              // "Content-Type": "application/x-www-form-urlencoded",
-          },
+        headers: tokenHeader,
         body: "name=" +newName +"&description=" + newDescription +"&category=" + newCat //+ alltags
       })
       .then(function(response) {

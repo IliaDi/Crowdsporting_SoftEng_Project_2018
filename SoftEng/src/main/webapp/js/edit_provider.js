@@ -130,15 +130,16 @@ function putProv() {
 	//let newlaa = laa;
 	//let newloo = loo;
 
-
+  var  tokenHeader = new Headers({
+    "X-OBSERVATORY-AUTH": "dc34ee33-486f-483a-b3a9-db552cb73974",
+    "Content-Type": "application/json",
+    
+  });
   var uri = '/observatory/api/shops/' + myid;
   //alert(uri);
   fetch(uri, {
         method: 'PUT',
-        headers: {
-              "Content-Type": "application/json",
-              // "Content-Type": "application/x-www-form-urlencoded",
-          },
+        headers: tokenHeader ,
         body: "name=" +newName +"&address=" + newAddress +"&lng=" + loo + "&lat=" + laa
       })
       .then(function(response) {

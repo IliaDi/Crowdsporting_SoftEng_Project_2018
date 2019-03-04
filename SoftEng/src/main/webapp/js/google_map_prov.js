@@ -76,12 +76,15 @@ function createProv() {
 	    alltags = alltags + "&tags=" + tag;
 	  });
 
+	  var  tokenHeader = new Headers({
+    "X-OBSERVATORY-AUTH": "dc34ee33-486f-483a-b3a9-db552cb73974",
+    "Content-Type": "application/json",
+    
+  });
+
 	fetch('/observatory/api/shops', {
 	    method: 'POST',
-	    headers: {
-            "Content-Type": "application/json",
-            // "Content-Type": "application/x-www-form-urlencoded",
-        },
+	    headers: tokenHeader,
 	    body: "name=" +name +"&address=" + address +"&lng=" + coord.lng() + "&lat=" + coord.lat() + alltags
 	  })
 	  .then(function(response) {

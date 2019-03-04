@@ -28,10 +28,14 @@ function createProd() {
 	  tags.forEach(function(tag){
 	    alltags = alltags + "&tags=" + tag;
 	  });
-	  
+	var  tokenHeader = new Headers({
+    "X-OBSERVATORY-AUTH": "dc34ee33-486f-483a-b3a9-db552cb73974",
+    "Content-Type": "application/json",
+  });
+
 	fetch('/observatory/api/products', {
 	    method: 'POST',
-
+	    headers: tokenHeader,
 	    body: "name=" +name +"&description=" + description +"&category="+category + alltags
 	  })
 	  .then(function(response) {

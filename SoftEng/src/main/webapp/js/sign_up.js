@@ -1,4 +1,9 @@
 document.getElementById("signUp").addEventListener("click", validateNewAcc);
+var  tokenHeader = new Headers({
+    "X-OBSERVATORY-AUTH": "dc34ee33-486f-483a-b3a9-db552cb73974",
+    "Content-Type": "application/json",
+    
+  });
 function createAcc() {
 	var fname = document.getElementById("fullname").value;
 	var pword = document.getElementById("psw").value;
@@ -6,10 +11,7 @@ function createAcc() {
 	var email = document.getElementById("email").value;
 	fetch('/observatory/api/signup', {
     method: 'POST',
-	headers: {
-            "Content-Type": "application/json",
-            // "Content-Type": "application/x-www-form-urlencoded",
-        },
+	headers: tokenHeader,
     body: "fullname=" +fname +"&password=" + pword + "&email=" + email
 	})
 	.then(function(response) {
