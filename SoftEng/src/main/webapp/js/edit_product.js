@@ -1,7 +1,8 @@
 document.getElementById("sear").addEventListener("click", showProd);
 document.getElementById("smh").addEventListener("click", editProd);
 document.getElementById("newProduct").addEventListener("click", putProd);
-var tags_product = new SlimSelect({
+var myid;
+/*var tags_prod = new SlimSelect({
   select: '#tags_prod' ,
 
   addable: function (value) {
@@ -11,7 +12,7 @@ var tags_product = new SlimSelect({
     // Return the value string
     return value // Optional - value alteration // ex: value.toLowerCase()
   }
-});
+});*/
 
 var category_prod = new SlimSelect({
   select: '#cat' ,
@@ -72,21 +73,51 @@ function editProd() {
   })
   .then(function(json) {
     let results = json.products;
+    myid = results[0].id;
     document.getElementById('name').value = results[0].name;
   	document.getElementById('description').value = results[0].description;
   	category_prod.set(results[0].category);
-  	tags_prod.set(results[0].tags);
+  	//tags_prod.set((results[0].tags)[0]);
+    
   })
   .catch(function(error) {
     console.error('Fetch Error -', error);
   });
-  alert("")
+  //alert((results[0].tags)[0]);
 }
 
 function putProd() {
-/*	let newName = document.getElementById('name').value;
+  let newName = document.getElementById('name').value;
 	let newDescription = document.getElementById('description').value;
 	let newCat = category_prod.selected();
-	let newProds = tags_prod.selected();*/
+	/*let new = tags_prod.selected();
+  var alltags = "";
+    newTags.forEach(function(tag){
+      alltags = alltags + "&tags=" + tag;
+    });*/
+  //alert(alltags);
+
+
+  var uri = '/observatory/api/products/' + myid;
+  //alert(uri);
+  fetch(uri, {
+        method: 'PUT',
+        headers: {
+              "Content-Type": "application/json",
+              // "Content-Type": "application/x-www-form-urlencoded",
+          },
+        body: "name=" +newName +"&description=" + newDescription +"&category=" + newCat //+ alltags
+      })
+      .then(function(response) {
+        if(response.status==200) return response.json();
+        throw new Error("HTTP error, status = " + response.status);
+      })
+      .then(function(product) {
+        console.log('all good ');
+      })
+      .catch(function (error) {
+        alert(error) ;
+      });
+
 }
 

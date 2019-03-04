@@ -31,10 +31,7 @@ function createProd() {
 	  
 	fetch('/observatory/api/products', {
 	    method: 'POST',
-	    headers: {
-            "Content-Type": "application/json",
-            // "Content-Type": "application/x-www-form-urlencoded",
-        },
+
 	    body: "name=" +name +"&description=" + description +"&category="+category + alltags
 	  })
 	  .then(function(response) {
