@@ -110,5 +110,26 @@ function getshops(){
 
 
 function createAct(){
+var price = document.getElementById("price").value;
+var pid = product.selected();
+var sid = shop.selected(); 
+var dateFroma = document.getElementById("dateFroma").value;
+var dateToa = document.getElementById("dateToa").value;
 
+  fetch('/observatory/api/prices', {
+      method: 'POST',
+      headers: tokenHeader,
+      body: "price=" +price +"&pid=" + pid +"&sid="+sid +"&dateFrom=" + dateFroma +"&dateTo="+dateToa
+    })
+    .then(function(response) {
+      if(response.status==200) return response.json();
+      throw new Error("HTTP error, status = " + response.status);
+    })
+    .then(function(product) {
+      console.log('all good ');
+    alert('Επιτυχής καταχώρηση τιμής');
+    })
+    .catch(function (error) {
+      alert(error) ;
+    });
 }
