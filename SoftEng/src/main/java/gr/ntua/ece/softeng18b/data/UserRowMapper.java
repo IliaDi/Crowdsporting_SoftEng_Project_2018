@@ -11,11 +11,12 @@ public class UserRowMapper implements RowMapper {
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-        String username   =  rs.getString("username");
+        Long id           = rs.getLong("id");
+        String username   =  rs.getString("fullname");
         String password   =  rs.getString("password");
-        String mail       =  rs.getString("mail");
+        String mail       =  rs.getString("email");
 
-        return new User(username, password, mail);
+        return new User(id, username, password, mail);
     }
 
 

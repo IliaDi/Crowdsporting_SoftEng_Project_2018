@@ -2,15 +2,22 @@ package gr.ntua.ece.softeng18b.data;
 
 import gr.ntua.ece.softeng18b.data.model.Product;
 import gr.ntua.ece.softeng18b.data.model.Shop;
+import gr.ntua.ece.softeng18b.data.model.Price;
+import gr.ntua.ece.softeng18b.data.model.PricesInfo;
+import gr.ntua.ece.softeng18b.data.model.User;
+import gr.ntua.ece.softeng18b.data.model.Token;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Array;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringJoiner;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -55,12 +62,30 @@ public class DataAccess {
         tm = new DataSourceTransactionManager(bds);
     }
 
-    public List<Product> getProducts(Limits limits) {
-        //TODO: Support limits
-        List<Product> products = jdbcTemplate.query("select * from product order by id", EMPTY_ARGS, new ProductRowMapper());
+    public List<Product> getProducts(Limits limits, String column, String order, Integer withdrawn) {
+
+        Long[] args = new Long[]{limits.getStart(), limits.getStart() + limits.getCount()};
+        String withdrawnQuery = "";
+        if (withdrawn != -1)
+          withdrawnQuery = "where withdrawn = " + withdrawn;
+
+        List<Product> products = jdbcTemplate.query("select * from product " + withdrawnQuery + " order by " + column + " " + order + " limit ?,?", args, new ProductRowMapper());
         for (Product p: products) {
             fetchTagsOfProduct(p);
         }
+        return products;
+    }
+
+    public List<Product> getProductsName(String name) {
+        String[] params = new String[]{name};
+        List<Product> products = jdbcTemplate.query("select * from product where name = ?", params, new ProductRowMapper());
+        if (products.isEmpty())
+            return products;
+        else {
+            for(Product p: products)
+                fetchTagsOfProduct(p);
+        }
+
         return products;
     }
 
@@ -213,7 +238,7 @@ public class DataAccess {
           }
 
           if (tags != null && tags.length > 0) {
-              jdbcTemplate.batchUpdate("update product_tags set tag = ? where pid = ?", new AbstractInterruptibleBatchPreparedStatementSetter(){
+              jdbcTemplate.batchUpdate("insert into product_tags values(?, ?)", new AbstractInterruptibleBatchPreparedStatementSetter(){
                   @Override
                   protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
                       if (i < tags.length) {
@@ -249,7 +274,7 @@ public class DataAccess {
     }
 
 
-    public Optional<Product> patchProduct(long id, String column, String value) {
+    public Optional<Product> patchProduct(long id, String column, String[] value) {
 
       TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
       transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
@@ -260,36 +285,53 @@ public class DataAccess {
 
       long ID = transactionTemplate.execute((TransactionStatus status) -> {
 
-          //Update the product record using a prepared statement
-          int rowCount = jdbcTemplate.update((Connection con) -> {
-
-              if (column == "withdrawn") {
-                  PreparedStatement ps = con.prepareStatement(
-                      "update product set withdrawn = ? where id = ?"
-                  );
-                  ps.setBoolean(1, Boolean.valueOf(value));
-                  ps.setLong(2, id);
-
-                  return ps;
+            if (column.equals("tags")) {
+                jdbcTemplate.batchUpdate("insert into product_tags values(?, ?)", new AbstractInterruptibleBatchPreparedStatementSetter(){
+                    @Override
+                    protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
+                        if (i < value.length) {
+                            ps.setLong(1, id);
+                            ps.setString(2, value[i]);
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                });
               }
 
-              else {
-                  PreparedStatement ps = con.prepareStatement(
-                      "update product set " + column + " = ? where id = ?"
-                  );
-                  ps.setString(1, value);
-                  ps.setLong(2, id);
+            else {
 
-                  return ps;
+              int rowCount = jdbcTemplate.update((Connection con) -> {
+
+                  if (column.equals("withdrawn")) {
+                      PreparedStatement ps = con.prepareStatement(
+                          "update product set withdrawn = ? where id = ?"
+                      );
+                      ps.setBoolean(1, Boolean.valueOf(value[0]));
+                      ps.setLong(2, id);
+
+                      return ps;
+                  }
+
+                  else {
+                      PreparedStatement ps = con.prepareStatement(
+                          "update product set " + column + " = ? where id = ?"
+                      );
+                      ps.setString(1, value[0]);
+                      ps.setLong(2, id);
+
+                      return ps;
+                  }
+              });
+
+              if (rowCount != 1) {
+                  throw new RuntimeException("Product not updated");
               }
-          });
+            }
 
-          if (rowCount != 1) {
-              throw new RuntimeException("Product not updated");
-          }
-
-
-          return id;
+            return id;
       });
 
 
@@ -299,28 +341,588 @@ public class DataAccess {
 
 
 
-    public Optional<Shop> getShop(long id) {
-        Long[] params = new Long[]{id};
-        List<Shop> shops = jdbcTemplate.query("select * from shop where id = ?", params, new ShopRowMapper());
-        if (shops.size() == 1)  {
-            Shop s = shops.get(0);
-            fetchTagsOfShop(s);
-            return Optional.of(s);
+
+
+
+
+
+    public List<Shop> getShops(Limits limits, String column, String order, Integer withdrawn) {
+         String withdrawnQuery = "";
+         if (withdrawn != -1)
+           withdrawnQuery = "where withdrawn = " + withdrawn;
+
+         List<Shop> shops = jdbcTemplate.query("select * from shop " + withdrawnQuery + " order by " + column + " " + order + " limit " + Long.toString(limits.getStart()) + "," + Integer.toString(limits.getCount()), EMPTY_ARGS, new ShopRowMapper());
+         for (Shop p: shops) {
+             fetchTagsOfShop(p);
+         }
+
+          return shops;
+    }
+
+     //get shop by its name
+     public List<Shop> getShopsName(String[] shops) {
+         Helper helper = new Helper();
+         List<Shop> shopsInfo = jdbcTemplate.query((Connection con) -> {
+             PreparedStatement ps = con.prepareStatement(
+                 "select * from shop where  " + helper.parseAtStart("name", shops.length)
+             );
+             helper.bindStringArray(ps, 0, shops);
+             return ps;
+         }, new ShopRowMapper());
+         return shopsInfo;
+     }
+
+
+
+
+     public Shop addShop(String name, String address, double lng, double lat, boolean withdrawn, String[] tags) {
+
+      TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+      transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+      long id = transactionTemplate.execute((TransactionStatus status) -> {
+
+          //Create the new shop record using a prepared statement
+          GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+          int rowCount = jdbcTemplate.update((Connection con) -> {
+              PreparedStatement ps = con.prepareStatement(
+                  "insert into shop(name, address, lng, lat, withdrawn) values(?, ?, ?, ?, ?)",
+                  Statement.RETURN_GENERATED_KEYS
+              );
+              ps.setString(1, name);
+              ps.setString(2, address);
+              ps.setDouble(3, lng);
+              ps.setDouble(4, lat);
+              ps.setBoolean(5, withdrawn);
+              return ps;
+          }, keyHolder);
+
+          if (rowCount != 1) {
+              throw new RuntimeException("New shop not inserted");
+          }
+
+          long newId = keyHolder.getKey().longValue();
+
+          if (tags != null && tags.length > 0) {
+              jdbcTemplate.batchUpdate("insert into shop_tags values(?, ?)", new AbstractInterruptibleBatchPreparedStatementSetter(){
+                  @Override
+                  protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
+                      if (i < tags.length) {
+                          ps.setLong(1, newId);
+                          ps.setString(2, tags[i]);
+                          return true;
+                      }
+                      else {
+                          return false;
+                      }
+                  }
+
+              });
+          }
+
+          return newId;
+      });
+
+      //New row has been added
+      Shop shop = new Shop(
+          id,
+          name,
+          address,
+          lng,
+          lat,
+          withdrawn
+      );
+      if (tags != null && tags.length > 0) {
+          shop.setTags(Arrays.asList(tags));
+      }
+
+      return shop;
+  }
+
+  public Optional<Shop> getShop(long id) {
+      Long[] params = new Long[]{id};
+      List<Shop> shops = jdbcTemplate.query("select * from shop where id = ?", params, new ShopRowMapper());
+      if (shops.size() == 1)  {
+          Shop s = shops.get(0);
+          fetchTagsOfShop(s);
+          return Optional.of(s);
+      }
+      else {
+          return Optional.empty();
+      }
+  }
+
+
+  protected void fetchTagsOfShop(Shop s) {
+      Long[] params = new Long[]{s.getId()};
+      List<String> tags = jdbcTemplate.query("select tag from shop_tags where sid = ?", params, new RowMapper<String>() {
+          @Override
+          public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+              return rs.getString("tag");
+          }
+      });
+      s.setTags(tags);
+  }
+
+  public Optional<Shop> deleteShop(long id) {
+
+    TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+    transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+    //Find the shop. Return if it does not exist.
+    Optional<Shop> shop = getShop(id);
+
+    if (!shop.isPresent())
+        return shop;
+
+    long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+        //Delete the shop record using a prepared statement
+        int rowCount = jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                "delete from shop where id = ?"
+            );
+            ps.setLong(1, id);
+            return ps;
+        });
+
+        if (rowCount != 1) {
+            throw new RuntimeException("Shop not deleted");
+        }
+
+
+        return id;
+    });
+
+    return shop;
+
+  }
+
+  public Optional<Shop> updateShop(long id, String name, String address, double lng, double lat, boolean withdrawn, String[] tags) {
+
+    TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+    transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+    //Find the shop. Return if it does not exist.
+    if (!getShop(id).isPresent())
+        return Optional.empty();
+
+    long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+        //Delete the shop record using a prepared statement
+        int rowCount = jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                "update shop set name = ? , address = ?, lng = ?, lat = ?, withdrawn = ? where id = ?"
+            );
+            ps.setString(1, name);
+            ps.setString(2, address);
+            ps.setDouble(3, lng);
+            ps.setDouble(4, lat);
+            ps.setBoolean(5, withdrawn);
+            ps.setLong(6, id);
+            return ps;
+        });
+
+        if (rowCount != 1) {
+            throw new RuntimeException("Shop not updated");
+        }
+
+        if (tags != null && tags.length > 0) {
+            jdbcTemplate.batchUpdate("update shop set tag = ? where sid = ?", new AbstractInterruptibleBatchPreparedStatementSetter(){
+                @Override
+                protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
+                    if (i < tags.length) {
+                        ps.setLong(1, id);
+                        ps.setString(2, tags[i]);
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+
+            });
+        }
+
+        return id;
+    });
+
+    //Row has been updated
+    Shop shop = new Shop(
+        id,
+        name,
+        address,
+        lng,
+        lat,
+        withdrawn
+    );
+    if (tags != null && tags.length > 0) {
+        shop.setTags(Arrays.asList(tags));
+    }
+
+    return Optional.of(shop);
+
+  }
+
+
+  public Optional<Shop> patchShop(long id, String column, String value) {
+
+    TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+    transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+    //Find the shop. Return if it does not exist.
+    if (!getShop(id).isPresent())
+        return Optional.empty();
+
+    long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+        //Update the shop record using a prepared statement
+        int rowCount = jdbcTemplate.update((Connection con) -> {
+
+            if (column == "withdrawn") {
+                PreparedStatement ps = con.prepareStatement(
+                    "update shop set withdrawn = ? where id = ?"
+                );
+                ps.setBoolean(1, Boolean.valueOf(value));
+                ps.setLong(2, id);
+
+                return ps;
+            }
+
+            else {
+                PreparedStatement ps = con.prepareStatement(
+                    "update shop set " + column + " = ? where id = ?"
+                );
+                ps.setString(1, value);
+                ps.setLong(2, id);
+
+                return ps;
+            }
+        });
+
+        if (rowCount != 1) {
+            throw new RuntimeException("Shop not updated");
+        }
+
+
+        return id;
+    });
+
+
+    return getShop(id);
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public List<PricesInfo> getPrice(Limits limits, String column, String order, String dateFrom, Long[] prods, Long[] shops, String[] tags) {
+
+        Long start = limits.getStart();
+        Integer count = limits.getCount();
+
+        Helper helper = new Helper();
+
+        List<PricesInfo> pricesInfo = jdbcTemplate.query((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                "select distinct price, date, product.id, product.name, shop.id, shop.name, shop.address from prices inner join product on prices.pid = product.id inner join shop on prices.sid = shop.id inner join product_tags on prices.pid = product_tags.pid inner join shop_tags on prices.sid = shop_tags.pid where date < ? " + helper.parse("shop.id", shops.length) + helper.parse("product.id", prods.length) + helper.parse("product_tags.tag", tags.length)
+            );
+            ps.setString(1, dateFrom);
+            helper.bindLongArray(ps, 1, shops);
+            helper.bindLongArray(ps, 1 + shops.length, prods);
+            helper.bindStringArray(ps, 1 + shops.length + prods.length, tags);
+
+
+            return ps;
+        }, new PricesInfoRowMapper());
+
+
+        return pricesInfo;
+    }
+
+
+    public Price addPrice(Double price, Long pid, Long sid, String date) {
+
+        TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        long id = transactionTemplate.execute((TransactionStatus status) -> {
+
+
+            //Create the new product record using a prepared statement
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            int rowCount = jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                    "insert into prices(price, pid, sid, date) values(?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS
+                );
+                ps.setDouble(1, price);
+                ps.setLong(2, pid);
+                ps.setLong(3, sid);
+                ps.setString(4, date);
+                return ps;
+            }, keyHolder);
+
+            if (rowCount != 1) {
+                throw new RuntimeException("New price not inserted");
+            }
+
+            long newId = keyHolder.getKey().longValue();
+
+            return newId;
+        });
+
+        //New row has been added
+        Price priceItem = new Price(
+            id,
+            price,
+            pid,
+            sid,
+            date
+        );
+
+
+        return priceItem;
+    }
+
+
+
+    public User addUser(String email, String fullname, String password) {
+
+        TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        long id = transactionTemplate.execute((TransactionStatus status) -> {
+
+            //Create the new user record using a prepared statement
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            int rowCount = jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                    "insert into user(email, fullname, password) values(?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS
+                );
+                ps.setString(1, email);
+                ps.setString(2, fullname);
+                ps.setString(3, password);
+                return ps;
+            }, keyHolder);
+
+            if (rowCount != 1) {
+                throw new RuntimeException("New user not inserted");
+            }
+
+            long newId = keyHolder.getKey().longValue();
+
+            return newId;
+        });
+
+        //New row has been added
+        User user = new User(
+            id,
+            email,
+            fullname,
+            password
+        );
+
+        return user;
+    }
+
+    public Optional<User> getUser(long id) {
+    Long[] params = new Long[]{id};
+    List<User> users = jdbcTemplate.query("select * from user where id = ?", params, new UserRowMapper());
+    if (users.size() == 1)  {
+        User p = users.get(0);
+        return Optional.of(p);
+    }
+    else {
+        return Optional.empty();
+    }
+}
+
+    public Optional<User> getUserName(String  username) {
+        String[] params = new String[]{username};
+        List<User> users = jdbcTemplate.query("select * from user where fullname = ?", params, new UserRowMapper());
+        if (users.size() == 1)  {
+            User u = users.get(0);
+            return Optional.of(u);
         }
         else {
             return Optional.empty();
         }
     }
 
-    protected void fetchTagsOfShop(Shop s) {
-        Long[] params = new Long[]{s.getId()};
-        List<String> tags = jdbcTemplate.query("select tag from shop_tags where pid = ?", params, new RowMapper<String>() {
-            @Override
-            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return rs.getString("tag");
+    public Optional<User> deleteUser(long id) {
+
+  TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+  transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+  //Find the user. Return if it does not exist.
+  Optional<User> user = getUser(id);
+
+  if (!user.isPresent())
+      return user;
+
+  long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+      //Delete the user record using a prepared statement
+      int rowCount = jdbcTemplate.update((Connection con) -> {
+          PreparedStatement ps = con.prepareStatement(
+              "delete from user where id = ?"
+          );
+          ps.setLong(1, id);
+          return ps;
+      });
+
+      if (rowCount != 1) {
+          throw new RuntimeException("User not deleted");
+      }
+
+
+      return id;
+  });
+
+  return user;
+
+}
+
+    public Optional<User> updateUser(long id, String email, String fullname, String password) {
+
+      TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+      transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+      //Find the user. Return if it does not exist.
+      if (!getUser(id).isPresent())
+          return Optional.empty();
+
+      long ID = transactionTemplate.execute((TransactionStatus status) -> {
+
+          //Delete the product record using a prepared statement
+          int rowCount = jdbcTemplate.update((Connection con) -> {
+              PreparedStatement ps = con.prepareStatement(
+                  "update user set email = ? , fullname = ?, password = ?"
+              );
+              ps.setString(1, email);
+              ps.setString(2, fullname);
+              ps.setString(3, password);
+              return ps;
+          });
+
+          if (rowCount != 1) {
+              throw new RuntimeException("User not updated");
+          }
+
+          return id;
+      });
+
+      //Row has been updated
+      User user = new User(
+          id,
+          fullname,
+          password,
+          email
+      );
+
+      return Optional.of(user);
+
+    }
+
+
+
+
+
+
+    public Token saveToken(String token) {
+
+        TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        long id = transactionTemplate.execute((TransactionStatus status) -> {
+
+            //Create the new product record using a prepared statement
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            int rowCount = jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                    "insert into token(token) values(?)",
+                    Statement.RETURN_GENERATED_KEYS
+                );
+                ps.setString(1, token);
+                return ps;
+            }, keyHolder);
+
+            if (rowCount != 1) {
+                throw new RuntimeException("Token not created");
             }
+
+            long newId = keyHolder.getKey().longValue();
+
+            return newId;
         });
-        s.setTags(tags);
+
+        //New row has been added
+        Token accessToken = new Token(
+            id,
+            token
+        );
+
+        return accessToken;
+    }
+
+
+
+    public Optional<Token> findToken(String token) {
+        String[] params = new String[]{token};
+        List<Token> tokens = jdbcTemplate.query("select * from token where token = ?", params, new TokenRowMapper());
+        if (tokens.size() == 1)  {
+            Token t = tokens.get(0);
+            return Optional.of(t);
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+
+    public Optional<Token> deleteToken(String accessToken) {
+
+      TransactionTemplate transactionTemplate = new TransactionTemplate(tm);
+      transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+      //Find the product. Return if it does not exist.
+      Optional<Token> token = findToken(accessToken);
+
+      if (!token.isPresent())
+          return Optional.empty();
+
+      transactionTemplate.execute((TransactionStatus status) -> {
+
+          //Delete the product record using a prepared statement
+          int rowCount = jdbcTemplate.update((Connection con) -> {
+              PreparedStatement ps = con.prepareStatement(
+                  "delete from token where token = ?"
+              );
+              ps.setString(1, accessToken);
+              return ps;
+          });
+
+          if (rowCount != 1) {
+              throw new RuntimeException("Token not de-activated");
+          }
+
+          return 0;
+      });
+
+      return token;
+
     }
 
 

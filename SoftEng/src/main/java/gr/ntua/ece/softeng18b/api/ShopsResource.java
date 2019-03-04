@@ -3,7 +3,7 @@ package gr.ntua.ece.softeng18b.api;
 import gr.ntua.ece.softeng18b.conf.Configuration;
 import gr.ntua.ece.softeng18b.data.DataAccess;
 import gr.ntua.ece.softeng18b.data.Limits;
-import gr.ntua.ece.softeng18b.data.model.Product;
+import gr.ntua.ece.softeng18b.data.model.Shop;
 import org.restlet.data.Form;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
@@ -14,12 +14,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductsResource extends ServerResource {
+public class ShopsResource extends ServerResource {
 
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
 
     @Override
     protected Representation get() throws ResourceException {
+
 
         // Parse "start" parameter
         Integer start = 0;
@@ -93,13 +94,13 @@ public class ProductsResource extends ServerResource {
 
         }
 
-        List<Product> products = dataAccess.getProducts(new Limits(start, count), column, order, withdrawn);
+        List<Shop> shops = dataAccess.getShops(new Limits(start, count), column, order, withdrawn);
 
         Map<String, Object> map = new HashMap<>();
         map.put("start", start);
         map.put("count", count);
         //map.put("total", xxx);
-        map.put("products", products);
+        map.put("shops", shops);
 
         return new JsonMapRepresentation(map);
     }
@@ -111,19 +112,17 @@ public class ProductsResource extends ServerResource {
         Form form = new Form(entity);
         //Read the parameters
         String name = form.getFirstValue("name");
-        String description = form.getFirstValue("description");
-        String category = form.getFirstValue("category");
+        String address = form.getFirstValue("address");
+        double lng = Double.valueOf(form.getFirstValue("lng"));
+        double lat = Double.valueOf(form.getFirstValue("lat"));
         boolean withdrawn = Boolean.valueOf(form.getFirstValue("withdrawn"));
         String[] tags = form.getValuesArray("tags");
 
         //validate the values (in the general case)
         //...
 
-        Product product = dataAccess.addProduct(name, description, category, withdrawn, tags);
+        Shop shop = dataAccess.addShop(name, address, lng, lat, withdrawn, tags);
 
-        Map<String, Object> map = new HashMap<>();
-        //map.put("total", xxx);
-        map.put("product", product);
-        return new JsonMapRepresentation(map);
+        return new JsonShopRepresentation(shop);
     }
 }

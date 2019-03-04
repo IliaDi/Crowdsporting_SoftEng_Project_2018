@@ -5,15 +5,22 @@ import java.util.Objects;
 
 public class User {
 
+    private final long id;
     private final String username;
     private final String password;
     private final String mail;
 
-    public User(String username, String password, String mail) {
+    public User(long id, String username, String password, String mail) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.mail = mail;
     }
+
+    public long getId() {
+        return id;
+    }
+
 
     public String getUsername() {
         return username;

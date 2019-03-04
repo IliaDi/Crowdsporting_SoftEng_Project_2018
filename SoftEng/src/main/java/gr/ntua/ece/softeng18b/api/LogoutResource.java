@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.restlet.util.Series;
 import org.restlet.data.Form;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
@@ -17,32 +18,24 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 
-public class LoginResource extends ServerResource {
+public class LogoutResource extends ServerResource {
 
+    public static final String AUTHENTICATION_HEADER = "X-OBSERVATORY-AUTH";
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
+
 
     @Override
     protected Representation post(Representation entity) throws ResourceException {
-        //All login attempts succeed with the same token
+        //Logout - Invalidate token
 
-        //Create a new restlet form
-        Form form = new Form(entity);
-
-        String username = form.getFirstValue("username");
-        String password = form.getFirstValue("password");
-
-        Optional<User> optional = dataAccess.getUserName(username);
-        User user = optional.orElseThrow(() -> new ResourceException(Status.CLIENT_ERROR_NOT_FOUND, "User: " + username + " not found"));
-
-        if (!user.getPassword().equals(password))
-          throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST, "Invalid password");
-
+        Series headers = (Series) getRequestAttributes().get("org.restlet.http.headers");
+        String token = headers.getFirstValue(AUTHENTICATION_HEADER);
 
         AuthenticationService authenticationService = new AuthenticationService();
-        String token = authenticationService.createToken();
+        authenticationService.destroyToken(token);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("token", token);
+        map.put("message", "ok");
 
         return new JsonMapRepresentation(map);
     }

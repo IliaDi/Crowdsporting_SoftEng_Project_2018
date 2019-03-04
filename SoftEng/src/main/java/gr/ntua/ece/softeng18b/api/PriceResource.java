@@ -3,6 +3,8 @@ package gr.ntua.ece.softeng18b.api;
 import gr.ntua.ece.softeng18b.conf.Configuration;
 import gr.ntua.ece.softeng18b.data.DataAccess;
 import gr.ntua.ece.softeng18b.data.Limits;
+import gr.ntua.ece.softeng18b.data.model.Price;
+import gr.ntua.ece.softeng18b.data.model.PricesInfo;
 import gr.ntua.ece.softeng18b.data.model.Product;
 import org.restlet.data.Form;
 import org.restlet.data.Status;
@@ -13,10 +15,16 @@ import org.restlet.resource.ServerResource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
 
-public class ProductsResource extends ServerResource {
+public class PriceResource extends ServerResource {
 
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
+
 
     @Override
     protected Representation get() throws ResourceException {
@@ -47,30 +55,10 @@ public class ProductsResource extends ServerResource {
             }
         }
 
-        // Parse "status" parameter
-        Integer withdrawn = 0;
-        String status = getQueryValue("status");
-
-        if (status == null) {
-            status = "ACTIVE";
-        }
-
-        if (status.equals("ALL")) {
-          withdrawn = -1;
-        }
-        else if (status.equals("ACTIVE")) {
-          withdrawn = 0;
-        }
-        else if (status.equals("WITHDRAWN")) {
-          withdrawn = 1;
-        }
-        else {
-            throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST, "Invalid status parameter: " + status);
-        }
 
         // Parse "sort" parameter
         String column = "id";
-        String order  =  "DESC";
+        String order  =  "ASC";
 
         String sortAttr = getQueryValue("sort");
         if (sortAttr != null) {
@@ -82,7 +70,7 @@ public class ProductsResource extends ServerResource {
             }
 
             column = sort[0];
-            if (!column.equals("id") && !column.equals("name")) {
+            if (!column.equals("geoDist") && !column.equals("price") && !column.equals("date")) {
                 throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST, "Invalid sort - column parameter: " + column);
             }
 
@@ -93,16 +81,50 @@ public class ProductsResource extends ServerResource {
 
         }
 
-        List<Product> products = dataAccess.getProducts(new Limits(start, count), column, order, withdrawn);
+        // Parse "shops" paramter
+        String[] shops = getQuery().getValuesArray("shops");
+        Long[]   shopIds = new Long[shops.length];
+        for (int i = 0; i < shops.length; i++) {
+            try {
+                shopIds[i] = Long.parseLong(shops[i]);
+            }
+            catch(Exception e) {
+                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST, "Invalid shop id parameter: " + shops[i]);
+            }
+        }
+
+        // Parse "products" parameter
+        String[] prods = getQuery().getValuesArray("products");
+        Long[]   prodIds = new Long[prods.length];
+        for (int i = 0; i < prods.length; i++) {
+            try {
+                prodIds[i] = Long.parseLong(prods[i]);
+            }
+            catch(Exception e) {
+                throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST, "Invalid prod id parameter: " + prods[i]);
+            }
+        }
+
+        // Parse "dateFrom" parameter
+        String dateFrom = getQueryValue("dateFrom");
+        if (dateFrom == null)
+            dateFrom = "curdate()";
+
+        String[] tags = getQuery().getValuesArray("tags");
+
+        List<PricesInfo> prices = dataAccess.getPrice(new Limits(start, count), column, order, dateFrom, prodIds, shopIds, tags);
 
         Map<String, Object> map = new HashMap<>();
         map.put("start", start);
         map.put("count", count);
         //map.put("total", xxx);
-        map.put("products", products);
+        map.put("prices", prices);
 
         return new JsonMapRepresentation(map);
     }
+
+
+
 
     @Override
     protected Representation post(Representation entity) throws ResourceException {
@@ -110,20 +132,31 @@ public class ProductsResource extends ServerResource {
         //Create a new restlet form
         Form form = new Form(entity);
         //Read the parameters
-        String name = form.getFirstValue("name");
-        String description = form.getFirstValue("description");
-        String category = form.getFirstValue("category");
-        boolean withdrawn = Boolean.valueOf(form.getFirstValue("withdrawn"));
-        String[] tags = form.getValuesArray("tags");
+        Double price = Double.valueOf(form.getFirstValue("price"));
+        Long pid = Long.valueOf(form.getFirstValue("pid"));
+        Long sid = Long.valueOf(form.getFirstValue("sid"));
+        String dateFrom = form.getFirstValue("dateFrom");
+        String dateTo = form.getFirstValue("dateTo");
+
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(dateFrom, format);
+        LocalDate endDate = LocalDate.parse(dateTo, format).plusDays(1);
 
         //validate the values (in the general case)
         //...
 
-        Product product = dataAccess.addProduct(name, description, category, withdrawn, tags);
+        List<LocalDate> dates = startDate.datesUntil(endDate).collect(Collectors.toList());
+
+        Price priceItem = dataAccess.addPrice(price, pid, sid, endDate.format(format));
+
+        List<Price> prices = dates.stream()
+                                  .map(date -> dataAccess.addPrice(price, pid, sid, date.format(format)))
+                                  .collect(Collectors.toList());
 
         Map<String, Object> map = new HashMap<>();
-        //map.put("total", xxx);
-        map.put("product", product);
+        map.put("prices", prices);
+
         return new JsonMapRepresentation(map);
     }
 }

@@ -127,21 +127,26 @@ public class ProductResource extends ServerResource {
         String description = form.getFirstValue("description");
         String category = form.getFirstValue("category");
         String withdrawn = form.getFirstValue("withdrawn");
-        String tags = form.getFirstValue("tags");
+        String[] tags = form.getValuesArray("tags");
 
         Optional<Product> optional = null;
 
+        String[] args = new String[1];
         if (name != null) {
-            optional = dataAccess.patchProduct(id, "name", name);
+            args[0] = name;
+            optional = dataAccess.patchProduct(id, "name", args);
         }
         else if (description != null) {
-            optional = dataAccess.patchProduct(id, "description", description);
+            args[0] = description;
+            optional = dataAccess.patchProduct(id, "description", args);
         }
         else if (category != null) {
-            optional = dataAccess.patchProduct(id, "category", category);
+            args[0] = category;
+            optional = dataAccess.patchProduct(id, "category", args);
         }
         else if (withdrawn != null) {
-            optional = dataAccess.patchProduct(id, "withdrawn", withdrawn);
+            args[0] = withdrawn;
+            optional = dataAccess.patchProduct(id, "withdrawn", args);
         }
         else if (tags != null) {
             optional = dataAccess.patchProduct(id, "tags", tags);
