@@ -16,7 +16,7 @@ function signMeIn() {
 	  })
 	  .then(function(product) {
 	    let tok = product[0].token
-		alert('Åðéôõ÷Þò åßóïäïò');
+		alert('hello!');
 	  })
 	  .catch(function (error) {
 	   	alert(error) ;
