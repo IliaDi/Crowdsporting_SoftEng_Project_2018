@@ -15,18 +15,6 @@ var tags_activity = new SlimSelect({
 });
 
 
-var category_act = new SlimSelect({
-  select: '#cat' ,
-
-  addable: function (value) {
-    // return false or null if you do not want to allow value to be submitted
-    if (value === 'bad') {return false}
-
-    // Return the value string
-    return value // Optional - value alteration // ex: value.toLowerCase()
-  }
-});
-
 var product = new SlimSelect({
   select: '#name' ,
   showSearch: true,
